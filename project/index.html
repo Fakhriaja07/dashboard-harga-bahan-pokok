@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3CclipPath%20id%3D%27g%27%3E%3Ccircle%20cx%3D%2726%27%20cy%3D%2726%27%20r%3D%2720%27%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2726%27%20cy%3D%2726%27%20r%3D%2720%27%20fill%3D%27%230c2d4d%27%2F%3E%3Cg%20clip-path%3D%27url%28%23g%29%27%20fill%3D%27none%27%20stroke%3D%27%23ffffff%27%20stroke-width%3D%273.4%27%3E%3Cellipse%20cx%3D%2726%27%20cy%3D%2726%27%20rx%3D%2710%27%20ry%3D%2720%27%2F%3E%3Cpath%20d%3D%27M4%2018h44M4%2034h44%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M30%2029h6l3%2017h17l3-12H37%27%20stroke%3D%27%23ffffff%27%20stroke-width%3D%278.5%27%2F%3E%3Cpath%20d%3D%27M30%2029h6l3%2017h17l3-12H37%27%20stroke%3D%27%23e4572e%27%20stroke-width%3D%274.4%27%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2743%27%20cy%3D%2752%27%20r%3D%274%27%20fill%3D%27%23ffffff%27%2F%3E%3Ccircle%20cx%3D%2743%27%20cy%3D%2752%27%20r%3D%272.6%27%20fill%3D%27%23e4572e%27%2F%3E%3Ccircle%20cx%3D%2754%27%20cy%3D%2752%27%20r%3D%274%27%20fill%3D%27%23ffffff%27%2F%3E%3Ccircle%20cx%3D%2754%27%20cy%3D%2752%27%20r%3D%272.6%27%20fill%3D%27%23e4572e%27%2F%3E%3C%2Fsvg%3E" />
+<title>Harga Bahan Pokok Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>PIHPS · BPS · Bapanas</span>
+    <span id="topStatus">Snapshot data · <b>16–17 November 2026</b></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-title">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><defs><clipPath id="brandGlobe"><circle cx="26" cy="26" r="20"/></clipPath></defs><circle cx="26" cy="26" r="20" fill="var(--navy)"/><g clip-path="url(#brandGlobe)" fill="none" stroke="var(--paper)" stroke-width="3.4"><ellipse cx="26" cy="26" rx="10" ry="20"/><path d="M4 18h44M4 34h44"/></g><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M30 29h6l3 17h17l3-12H37" stroke="var(--paper)" stroke-width="8.5"/><path d="M30 29h6l3 17h17l3-12H37" stroke="var(--accent)" stroke-width="4.4"/></g><circle cx="43" cy="52" r="4" fill="var(--paper)"/><circle cx="43" cy="52" r="2.6" fill="var(--accent)"/><circle cx="54" cy="52" r="4" fill="var(--paper)"/><circle cx="54" cy="52" r="2.6" fill="var(--accent)"/></svg></span>
+          <div>
+            <div class="mast-kicker">Buletin Harga Pangan</div>
+            <h1>Harga Bahan Pokok<br /><span class="hl">Indonesia</span></h1>
+          </div>
+        </div>
+        <p class="mast-lede">Berapa harga beras, cabai, dan telur hari ini — di pasar nasional dan di setiap provinsi di Indonesia.</p>
+        <p class="mast-desc">Dashboard ini merangkum harga eceran kebutuhan pokok dari sumber resmi: <strong>PIHPS Bank Indonesia</strong>, <strong>BPS</strong>, dan <strong>Panel Harga Pangan Bapanas</strong>. Setiap angka diberi label sumber dan tanggalnya — angka dari sumber berbeda tidak dicampur dalam satu tabel, karena periode dan cakupan pencatatannya berbeda.</p>
+      </div>
+      <aside class="update-box" aria-label="Keterangan pembaruan data">
+        <div class="ub-head">Pembaruan Terakhir <span class="live-badge" id="liveBadge"><span class="dot"></span>Memuat…</span></div>
+        <dl>
+          <div class="ub-row"><dt>Tanggal data</dt><dd id="ubDate">Selasa, 17 Nov 2026</dd></div>
+          <div class="ub-row"><dt>Halaman dimuat</dt><dd id="ubTime">19.37 WIB</dd></div>
+          <div class="ub-row"><dt>Cakupan</dt><dd id="ubCoverage">Nasional · 38 Provinsi</dd></div>
+          <div class="ub-row"><dt>Sumber</dt><dd id="ubSource">3 lembaga resmi</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+  <div class="ticker" aria-label="Harga pilihan hari ini menurut PIHPS">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="archive-note" id="archiveBanner" hidden><strong>Mode arsip</strong> — data 17 Nov 2026, pembaruan live tidak tersedia saat ini. Halaman menampilkan snapshot terakhir yang tersimpan di dalamnya.</div>
+</div>
+
+<div class="wrap indicators">
+  <div class="ind-strip" role="list" aria-label="Indikator inflasi BPS Oktober 2026">
+    <div class="ind" role="listitem">
+      <div class="label">Inflasi umum</div>
+      <div class="value">3,23<small>%</small></div>
+      <div class="note">Year-on-year, Oktober 2026</div>
+      <div class="src">SUMBER: BPS</div>
+    </div>
+    <div class="ind" role="listitem">
+      <div class="label">Inflasi pangan bergejolak</div>
+      <div class="value">5,81<small>%</small></div>
+      <div class="note">Volatile food, year-on-year</div>
+      <div class="src">SUMBER: BPS · OKT 2026</div>
+    </div>
+    <div class="ind" role="listitem">
+      <div class="label">Inflasi inti</div>
+      <div class="value">2,56<small>%</small></div>
+      <div class="note">Year-on-year, Oktober 2026</div>
+      <div class="src">SUMBER: BPS</div>
+    </div>
+    <div class="ind hot" role="listitem">
+      <div class="label">Inflasi cabai rawit</div>
+      <div class="value">104,35<small>%</small></div>
+      <div class="note">Naik dari 64,16% pada September 2026</div>
+      <div class="src">SUMBER: BPS · OKT 2026</div>
+    </div>
+  </div>
+</div>
+
+<nav class="jumpnav" aria-label="Loncat ke bagian">
+  <div class="wrap">
+    <a href="#nasional">Harga Nasional</a>
+    <a href="#konteks">Konteks BPS</a>
+    <a href="#provinsi">Per Provinsi</a>
+    <a href="#sumber">Sumber Data</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ NASIONAL ============ -->
+  <section id="nasional" aria-labelledby="h-nasional">
+    <div class="sec-head">
+      <h2 id="h-nasional">Harga Nasional — <span class="hl">Pasar Tradisional</span></h2>
+      <div class="sec-meta" id="natMeta">SUMBER: <b>PIHPS NASIONAL (BANK INDONESIA)</b><br />UPDATE 17 NOV 2026 · 19.37 WIB</div>
+    </div>
+    <p class="sec-lede" id="natLede">Harga eceran nasional per kilogram di pasar tradisional. Kolom perubahan adalah perubahan terhadap hari sebelumnya, seperti dilaporkan PIHPS pada 17 November 2026. Cabai rawit merah dan telur ayam ras berasal dari update pukul 10.20 WIB di hari yang sama.</p>
+
+    <div class="controls">
+      <label class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <input id="searchInput" type="search" placeholder="Cari komoditas… misalnya “cabai” atau “beras super”" aria-label="Cari komoditas" />
+      </label>
+      <div class="chips" role="group" aria-label="Filter kategori" id="catChips">
+        <button class="chip" type="button" data-cat="semua" aria-pressed="true">Semua</button>
+        <button class="chip" type="button" data-cat="beras" aria-pressed="false">Beras</button>
+        <button class="chip" type="button" data-cat="bawang" aria-pressed="false">Bawang</button>
+        <button class="chip" type="button" data-cat="cabai" aria-pressed="false">Cabai</button>
+        <button class="chip" type="button" data-cat="protein" aria-pressed="false">Protein</button>
+        <button class="chip" type="button" data-cat="minyak-gula" aria-pressed="false">Minyak &amp; Gula</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <table class="ptable" id="natTable" aria-label="Harga bahan pokok nasional PIHPS 17 November 2026">
+        <thead>
+          <tr>
+            <th scope="col">Komoditas</th>
+            <th scope="col" class="num">Harga (Rp/kg)</th>
+            <th scope="col" class="num">Perubahan vs kemarin</th>
+          </tr>
+        </thead>
+        <tbody id="priceBody"></tbody>
+      </table>
+      <div class="empty-msg" id="emptyMsg" hidden>Tidak ada komoditas yang cocok dengan pencarian itu.</div>
+    </div>
+    <p class="cmp-table-note" id="natNote">Tanda “—” pada kolom perubahan berarti PIHPS tidak melaporkan perubahan untuk komoditas tersebut pada 17 November 2026.</p>
+  </section>
+
+  <!-- ============ KONTEKS BPS ============ -->
+  <section id="konteks" aria-labelledby="h-konteks">
+    <div class="sec-head">
+      <h2 id="h-konteks">Konteks Inflasi <span class="hl">dari BPS</span></h2>
+      <div class="sec-meta">SUMBER: <b>BPS</b><br />OKT 2026 &amp; PEKAN KE-2 NOV 2026</div>
+    </div>
+    <p class="sec-lede">BPS mencatat rata-rata nasional cabai merah dan cabai rawit pada pekan ke-2 November 2026 <strong>jauh di atas batas atas Harga Acuan (HAP) konsumen</strong>. Empat komoditas disebut BPS berstatus “stabil tinggi”: <strong>beras, minyak goreng, cabai merah, dan cabai rawit</strong>.</p>
+
+    <div class="hap-grid">
+      <div class="hap-card">
+        <h3>Cabai vs Harga Acuan (HAP)</h3>
+        <p class="hap-sub">Rata-rata nasional BPS, pekan ke-2 Nov 2026 · Rp/kg</p>
+        <div class="bar-row">
+          <div class="bar-label"><span class="bl-name">Cabai merah — rata-rata nasional</span><span class="bl-val">Rp73.743</span></div>
+          <div class="bar-track"><div class="bar-fill over" style="width:100%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="bl-name">Batas atas HAP cabai merah</span><span class="bl-val">Rp55.000</span></div>
+          <div class="bar-track"><div class="bar-fill hap" style="width:74.6%"></div></div>
+          <div class="over-note">Rata-rata nasional Rp18.743 di atas batas atas HAP</div>
+        </div>
+        <div class="bar-row" style="margin-top:22px">
+          <div class="bar-label"><span class="bl-name">Cabai rawit — rata-rata nasional</span><span class="bl-val">Rp83.643</span></div>
+          <div class="bar-track"><div class="bar-fill over" style="width:100%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span class="bl-name">Batas atas HAP cabai rawit</span><span class="bl-val">Rp57.000</span></div>
+          <div class="bar-track"><div class="bar-fill hap" style="width:68.2%"></div></div>
+          <div class="over-note">Rata-rata nasional Rp26.643 di atas batas atas HAP</div>
+        </div>
+      </div>
+
+      <div class="hap-card">
+        <h3>Angka kunci lainnya</h3>
+        <p class="hap-sub">Dari Rakor Pengendalian Inflasi Daerah, 16 Nov 2026</p>
+        <div class="stable-list" style="grid-template-columns:1fr">
+          <div class="stable-item">Beras — rata-rata nasional Rp15.716/kg <span>BPS, pekan ke-2 Nov 2026</span></div>
+          <div class="stable-item">Inflasi cabai rawit 104,35% (y-on-y) <span>Melonjak dari 64,16% pada September 2026</span></div>
+          <div class="stable-item">“Stabil tinggi” menurut BPS <span>Beras · minyak goreng · cabai merah · cabai rawit</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HARGA PER PROVINSI ============ -->
+  <section id="provinsi" aria-labelledby="h-provinsi">
+    <div class="sec-head">
+      <h2 id="h-provinsi">Harga per <span class="hl">Provinsi</span></h2>
+      <div class="sec-meta" id="provMeta">SUMBER: <b>PANEL HARGA PANGAN BAPANAS</b><br />17 NOV 2026 · DIBANDING 16 NOV 2026</div>
+    </div>
+    <p class="sec-lede" id="provLede">Harga rata-rata eceran tingkat konsumen untuk <strong>38 provinsi</strong> dan 5 komoditas utama, dari Panel Harga Pangan Bapanas. Pilih provinsi untuk melihat detail harganya, atau pakai peringkat di bawah untuk membandingkan satu komoditas antarprovinsi. Semua perubahan adalah selisih <strong>17 November terhadap 16 November 2026</strong>.</p>
+
+    <div class="controls">
+      <label class="select-box">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        <select id="provSelect" aria-label="Pilih provinsi"></select>
+      </label>
+    </div>
+
+    <div class="panel">
+      <div class="prov-head">
+        <h3 id="provName">Aceh</h3>
+        <span class="prov-head-note" id="provHeadNote">HARGA 17 NOV 2026 · PERUBAHAN VS 16 NOV 2026</span>
+      </div>
+      <table class="ptable" aria-label="Detail harga per komoditas untuk provinsi terpilih menurut Bapanas">
+        <thead>
+          <tr>
+            <th scope="col">Komoditas</th>
+            <th scope="col" class="num">Harga (Rp)</th>
+            <th scope="col" class="num" id="provChgHead">Perubahan vs 16 Nov</th>
+            <th scope="col" class="num hide-sm">vs Rata-rata Nasional</th>
+          </tr>
+        </thead>
+        <tbody id="provBody"></tbody>
+      </table>
+    </div>
+    <p class="cmp-table-note" id="provNote">Rata-rata nasional Bapanas 17 Nov 2026: beras medium Rp13.728/kg · cabai rawit merah Rp86.209/kg · bawang merah Rp35.774/kg · telur ayam Rp27.861/kg · Minyakita Rp16.895/liter. Tanda “—” berarti provinsi belum melaporkan komoditas itu: Papua Pegunungan (bawang merah, Minyakita) dan Papua Tengah (cabai rawit merah), pada kedua tanggal.</p>
+
+    <h3 class="prov-sub" id="mvHead">Pergerakan Terbesar, 16 → 17 Nov 2026</h3>
+    <p class="prov-sub-note">Perubahan satu hari terbesar antarprovinsi, dihitung dari data Bapanas kedua tanggal tersebut.</p>
+    <div class="hap-grid">
+      <div class="hap-card">
+        <h3>Kenaikan Terbesar</h3>
+        <p class="hap-sub">Berdasarkan persen perubahan</p>
+        <div id="mvUpRows">
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Minyakita · /liter</span></div><span class="chg up">▲ +7.725 <span class="pct">(+49,20%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Beras medium · /kg</span></div><span class="chg up">▲ +1.813 <span class="pct">(+13,07%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Bawang merah · /kg</span></div><span class="chg up">▲ +5.000 <span class="pct">(+9,09%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Kalimantan Selatan<span>Cabai rawit merah · /kg</span></div><span class="chg up">▲ +5.417 <span class="pct">(+5,10%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Cabai rawit merah · /kg</span></div><span class="chg up">▲ +6.500 <span class="pct">(+4,41%)</span></span></div>
+        </div>
+        <p class="mv-note" id="mvUpNote"><b>Catatan:</b> lonjakan Minyakita di Papua Selatan (+49,20% dalam sehari, Rp15.700 → Rp23.425) sangat besar — kemungkinan pelaporan di provinsi itu masih terbatas, tetapi angka inilah yang dilaporkan Bapanas.</p>
+      </div>
+      <div class="hap-card">
+        <h3>Penurunan Terbesar</h3>
+        <p class="hap-sub" id="mvDownSub">Semuanya cabai rawit merah</p>
+        <div id="mvDownRows">
+        <div class="mv-row"><div class="mv-name">Papua Barat Daya<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −11.705 <span class="pct">(−10,07%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Kalimantan Timur<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −4.555 <span class="pct">(−5,11%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Sumatera Utara<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −2.976 <span class="pct">(−4,14%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Sulawesi Barat<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −4.266 <span class="pct">(−4,05%)</span></span></div>
+        </div>
+        <p class="mv-note" id="mvDownNote">Jawa Timur, Papua Selatan, dan Sumatera Barat mencatat kenaikan di kelima komoditas. Sebaliknya, Kalimantan Barat, Kalimantan Tengah, Maluku, Sulawesi Tenggara, dan Papua Pegunungan tidak mencatat satu pun komoditas naik.</p>
+      </div>
+    </div>
+
+    <h3 class="prov-sub">Peringkat Harga antar Provinsi</h3>
+    <p class="prov-sub-note" id="rankUnit">Pilih komoditas — tabel mengurutkan 38 provinsi dari harga tertinggi ke terendah pada 17 Nov 2026, lengkap dengan perubahannya terhadap 16 Nov 2026.</p>
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Pilih komoditas untuk peringkat" id="rankChips">
+        <button class="chip" type="button" data-ci="0" aria-pressed="false">Beras Medium</button>
+        <button class="chip" type="button" data-ci="1" aria-pressed="true">Cabai Rawit Merah</button>
+        <button class="chip" type="button" data-ci="2" aria-pressed="false">Bawang Merah</button>
+        <button class="chip" type="button" data-ci="3" aria-pressed="false">Telur Ayam</button>
+        <button class="chip" type="button" data-ci="4" aria-pressed="false">Minyakita</button>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="ptable rank-table" id="rankTable" aria-label="Peringkat harga komoditas per provinsi menurut Bapanas 17 November 2026">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Provinsi</th>
+            <th scope="col" class="num" id="rankPriceHead">Harga (Rp/kg)</th>
+            <th scope="col" class="num" id="rankChgHead">Perubahan vs 16 Nov</th>
+          </tr>
+        </thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+
+    <h3 class="prov-sub">Termurah &amp; Termahal per Komoditas</h3>
+    <p class="prov-sub-note" id="extNote">Harga rata-rata eceran 17 Nov 2026 menurut Bapanas.</p>
+    <div class="panel">
+      <table class="ptable" id="extTable" aria-label="Provinsi termurah dan termahal per komoditas menurut Bapanas 17 November 2026">
+        <thead>
+          <tr><th scope="col">Komoditas</th><th scope="col">Termurah</th><th scope="col">Termahal</th></tr>
+        </thead>
+        <tbody id="extBody">
+          <tr>
+            <td><span class="item-name">Beras medium</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Jambi</span><span class="ext-price">Rp12.631</span></td>
+            <td><span class="ext-prov">Papua Pegunungan</span><span class="ext-price">Rp20.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Cabai rawit merah</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Nusa Tenggara Barat</span><span class="ext-price">Rp53.508</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp154.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Bawang merah</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Nusa Tenggara Timur</span><span class="ext-price">Rp26.860</span></td>
+            <td><span class="ext-prov">Papua Selatan &amp; Papua Barat</span><span class="ext-price">Rp60.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Telur ayam</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Jawa Timur</span><span class="ext-price">Rp23.132</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp51.429</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Minyakita</span> <span class="item-unit">/liter</span></td>
+            <td><span class="ext-prov">Bali</span><span class="ext-price">Rp15.700</span><span class="ext-note">Juga Banten, Gorontalo, Papua Tengah</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp23.425</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cmp-table-note">Bapanas memperbarui data sepanjang hari, jadi angka per provinsi bisa berbeda dengan harga di pasar tertentu. Data kosong (“—”) berarti provinsi belum melaporkan komoditas tersebut.</p>
+  </section>
+
+</main>
+
+<footer id="sumber">
+  <div class="wrap">
+    <h3>Sumber Data</h3>
+    <ul class="src-list">
+      <li><b>PIHPS Nasional (Bank Indonesia)</b> — hargapangan.id; dikutip via koncodewe.com &amp; newshive.id, 17 Nov 2026.</li>
+      <li><b>BPS</b> — dikutip via kowantaranews.com &amp; suaragarut.id, 16 Nov 2026; Rakor Pengendalian Inflasi Daerah 16 Nov 2026.</li>
+      <li><b>Panel Harga Pangan Bapanas</b> — dikutip via journalarta.com, 17 Nov 2026; termasuk data per provinsi (38 provinsi, 5 komoditas, 17 Nov dibanding 16 Nov 2026) untuk section Harga per Provinsi.</li>
+      <li><b>baksosapi.com (API live)</b> — situs pihak ketiga yang mengumpulkan data PIHPS Bank Indonesia dan Panel Harga Pangan Bapanas; bukan situs resmi kedua lembaga itu. Harga nasional dan harga per provinsi diambil dari API ini setiap halaman dibuka (diperbarui ±06.00 &amp; 10.00 WIB). Minyakita tidak tersedia di API ini.</li>
+    </ul>
+    <div class="caveat">
+      <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri sendiri dengan label sumber dan tanggalnya. Harga nasional dan harga per provinsi kini diambil live dari API baksosapi.com setiap halaman dibuka — baksosapi.com adalah cermin pihak ketiga atas data PIHPS dan Bapanas, bukan sumber resminya. Jika API tidak terjangkau, halaman otomatis menampilkan data arsip (snapshot) 16–17 November 2026 yang tetap tertanam di halaman ini, dan menandainya sebagai mode arsip. Minyakita dan indikator inflasi BPS tetap snapshot bertanggal sesuai labelnya. Halaman ini tidak menampilkan grafik tren harian. Pada section Harga per Provinsi, sel bertanda “—” berarti provinsi belum melaporkan komoditas itu pada tanggal datanya.
+    </div>
+    <div class="foot-line">
+      <span>© 2026 Fakhri — Data Analyst</span>
+      <span class="mono" id="footStatus">Snapshot data: 16–17 Nov 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

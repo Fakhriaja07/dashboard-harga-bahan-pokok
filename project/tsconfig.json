@@ -1,0 +1,1 @@
+{"compilerOptions":{"lib":["DOM","ES2020"],"module":"ESNext","moduleDetection":"force","moduleResolution":"bundler","noEmit":true,"skipLibCheck":true,"strict":true,"target":"ES2020"},"include":["src","vite.config.ts"]}
