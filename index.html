@@ -276,15 +276,7 @@
   }
   .stable-item span{display:block;font-size:12px;color:var(--ink-3);font-weight:500;margin-top:2px}
 
-  /* ---------- Compare chart ---------- */
-  .cmp-legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--ink-2);margin-bottom:14px}
-  .cmp-legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:7px;vertical-align:-1px}
-  .cmp-wrap{overflow-x:auto}
-  .cmp-svg{min-width:640px;width:100%;height:auto;display:block}
   .cmp-table-note{font-size:12.5px;color:var(--ink-3);margin-top:10px}
-
-  .diff{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13.5px;color:var(--down);white-space:nowrap}
-  .diff::before{content:"−"}
 
   /* ---------- Per provinsi ---------- */
   .select-box{
@@ -369,10 +361,6 @@
     background:var(--paper);color:var(--ink);padding:12px 16px;font-size:14.5px;
   }
   .archive-note strong{color:var(--amber);text-transform:uppercase;letter-spacing:.04em}
-  .diff.over{color:var(--up)}
-  .diff.over::before{content:"+"}
-  .diff.zero{color:var(--flat)}
-  .diff.zero::before{content:""}
   .row-tag{
     display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
     color:var(--ink-3);margin-top:3px;letter-spacing:.02em;
@@ -480,7 +468,6 @@
   <div class="wrap">
     <a href="#nasional">Harga Nasional</a>
     <a href="#konteks">Konteks BPS</a>
-    <a href="#riau-nasional">Riau vs Nasional</a>
     <a href="#provinsi">Per Provinsi</a>
     <a href="#riau">Harga Riau</a>
     <a href="#pekanbaru">Pekanbaru</a>
@@ -572,40 +559,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ============ RIAU VS NASIONAL ============ -->
-  <section id="riau-nasional" aria-labelledby="h-riau-nasional">
-    <div class="sec-head">
-      <h2 id="h-riau-nasional">Riau <span class="hl">vs</span> Nasional</h2>
-      <div class="sec-meta" id="cmpMeta">SUMBER: <b>PANEL HARGA PANGAN BAPANAS</b><br />17 NOV 2026 · TINGKAT KONSUMEN</div>
-    </div>
-    <p class="sec-lede" id="cmpLede">Perbandingan apel-ke-apel — metodologi dan tanggal sama. Kabar baiknya: pada 17 November 2026, <strong>Riau lebih murah dari rata-rata nasional pada kelima komoditas ini</strong>.</p>
-
-    <div class="panel" style="padding:22px">
-      <div class="cmp-legend">
-        <span><i style="background:var(--riau)"></i>Riau</span>
-        <span><i style="background:var(--nas)"></i>Nasional</span>
-        <span style="color:var(--ink-3)">Harga rata-rata eceran, Rp per kg (Minyakita per liter)</span>
-      </div>
-      <div class="cmp-wrap"><div id="cmpChart"></div></div>
-    </div>
-
-    <div class="panel" style="margin-top:16px">
-      <table class="ptable" id="cmpTable" aria-label="Perbandingan harga Riau dan nasional menurut Bapanas 17 November 2026">
-        <thead>
-          <tr><th scope="col">Komoditas</th><th scope="col" class="num">Riau</th><th scope="col" class="num">Nasional</th><th scope="col" class="num" id="cmpDiffHead">Selisih (Riau lebih murah)</th></tr>
-        </thead>
-        <tbody id="cmpBody">
-          <tr><td><span class="item-name">Beras medium</span> <span class="item-unit">/kg</span></td><td class="num price">13.496</td><td class="num price">13.728</td><td class="num"><span class="diff">232</span></td></tr>
-          <tr><td><span class="item-name">Cabai rawit merah</span> <span class="item-unit">/kg</span></td><td class="num price">81.573</td><td class="num price">86.209</td><td class="num"><span class="diff">4.636</span></td></tr>
-          <tr><td><span class="item-name">Bawang merah</span> <span class="item-unit">/kg</span></td><td class="num price">34.134</td><td class="num price">35.774</td><td class="num"><span class="diff">1.640</span></td></tr>
-          <tr><td><span class="item-name">Telur ayam</span> <span class="item-unit">/kg</span></td><td class="num price">26.449</td><td class="num price">27.861</td><td class="num"><span class="diff">1.412</span></td></tr>
-          <tr><td><span class="item-name">Minyakita</span> <span class="item-unit">/liter</span> <span class="item-unit">(data 17 Nov 2026)</span></td><td class="num price">15.956</td><td class="num price">16.895</td><td class="num"><span class="diff">939</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cmp-table-note" id="cmpNote">Konteks nasional Bapanas 17 Nov 2026: beras premium Rp16.264/kg · daging ayam ras Rp38.206/kg · cabai merah keriting Rp78.161/kg · cabai merah besar Rp58.983/kg · bawang putih bonggol Rp35.998/kg.</p>
   </section>
 
   <!-- ============ HARGA PER PROVINSI ============ -->
@@ -965,43 +918,6 @@
   });
   render();
 
-  /* ===== Grafik Riau vs Nasional (Bapanas) — batang berpasangan ===== */
-  var CMP = [
-    { name:"Beras medium",      unit:"/kg",    riau:13496, nas:13728 },
-    { name:"Cabai rawit merah", unit:"/kg",    riau:81573, nas:86209 },
-    { name:"Bawang merah",      unit:"/kg",    riau:34134, nas:35774 },
-    { name:"Telur ayam",        unit:"/kg",    riau:26449, nas:27861 },
-    { name:"Minyakita",         unit:"/liter", riau:15956, nas:16895, snap:true }
-  ];
-  function drawCmp(){
-  var W = 880, rowH = 74, top = 8, labelW = 196, valW = 86;
-  var chartW = W - labelW - valW;
-  var maxV = 90000;
-  CMP.forEach(function(d){ if (d.riau > maxV) maxV = d.riau; if (d.nas > maxV) maxV = d.nas; });
-  maxV = Math.ceil(maxV * 1.04 / 10000) * 10000;
-  var H = top + CMP.length * rowH + 6;
-  var s = '<svg class="cmp-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Grafik batang perbandingan harga Riau dan nasional menurut Bapanas">';
-  CMP.forEach(function(d, i){
-    var y = top + i * rowH;
-    var rw = Math.max(3, d.riau / maxV * chartW);
-    var nw = Math.max(3, d.nas / maxV * chartW);
-    s += '<text x="0" y="' + (y + 20) + '" style="fill:var(--ink)" font-size="14.5" font-weight="700" font-family="Archivo, sans-serif">' + d.name + '</text>';
-    s += '<text x="0" y="' + (y + 40) + '" style="fill:var(--ink-3)" font-size="11.5" font-family="IBM Plex Mono, monospace">Rp ' + d.unit + (d.snap ? ' · data 17 Nov 2026' : '') + '</text>';
-    /* Riau */
-    s += '<rect x="' + labelW + '" y="' + (y + 2) + '" width="' + rw.toFixed(1) + '" height="15" rx="2" style="fill:var(--riau)"></rect>';
-    s += '<text x="' + (labelW + rw + 9) + '" y="' + (y + 14) + '" style="fill:var(--riau)" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace">' + fmt(d.riau) + '</text>';
-    /* Nasional */
-    s += '<rect x="' + labelW + '" y="' + (y + 24) + '" width="' + nw.toFixed(1) + '" height="15" rx="2" style="fill:var(--nas)"></rect>';
-    s += '<text x="' + (labelW + nw + 9) + '" y="' + (y + 36) + '" style="fill:var(--ink-2)" font-size="13" font-weight="600" font-family="IBM Plex Mono, monospace">' + fmt(d.nas) + '</text>';
-    if (i < CMP.length - 1){
-      s += '<line x1="0" y1="' + (y + rowH - 12) + '" x2="' + W + '" y2="' + (y + rowH - 12) + '" style="stroke:var(--line-soft)" stroke-width="1"></line>';
-    }
-  });
-  s += '</svg>';
-  document.getElementById("cmpChart").innerHTML = s;
-  }
-  drawCmp();
-
   /* ===== Harga per Provinsi (Bapanas, 17 Nov vs 16 Nov 2026) =====
      Urutan array per provinsi: [beras17, beras16, cabai17, cabai16,
      bawang17, bawang16, telur17, telur16, minyakita17, minyakita16]
@@ -1266,56 +1182,6 @@
       "Tanda “—” pada kolom perubahan berarti API tidak melaporkan harga kemarin untuk komoditas tersebut.";
   }
 
-  /* ----- Riau vs Nasional ----- */
-  function renderCmpTable(){
-    var html = "";
-    CMP.forEach(function(d){
-      var df = d.nas - d.riau, cell;
-      if (df > 0) cell = '<span class="diff">' + fmt(df) + '</span>';
-      else if (df < 0) cell = '<span class="diff over">' + fmt(-df) + '</span>';
-      else cell = '<span class="diff zero">0</span>';
-      html += '<tr><td><span class="item-name">' + d.name + '</span> <span class="item-unit">' + d.unit + '</span>' +
-              (d.snap ? ' <span class="item-unit">(data 17 Nov 2026)</span>' : '') + '</td>' +
-              '<td class="num price">' + fmt(d.riau) + '</td>' +
-              '<td class="num price">' + fmt(d.nas) + '</td>' +
-              '<td class="num">' + cell + '</td></tr>';
-    });
-    document.getElementById("cmpBody").innerHTML = html;
-  }
-  function applyCompare(date){
-    var changed = false;
-    if (live.bySlug){
-      MAIN_SLUGS.forEach(function(slug, i){
-        var r = live.bySlug[slug];
-        if (r){ CMP[i].nas = r.avg; changed = true; }
-      });
-    }
-    MAIN_SLUGS.forEach(function(slug, i){
-      var map = live.prov[slug];
-      if (map && map["Riau"]){ CMP[i].riau = map["Riau"].price; changed = true; }
-    });
-    if (!changed) return;
-    drawCmp();
-    renderCmpTable();
-    document.getElementById("cmpMeta").innerHTML =
-      "SUMBER: <b>PIHPS &amp; BAPANAS VIA BAKSOSAPI.COM</b><br />" + fmtShort(date).toUpperCase() + " · TINGKAT KONSUMEN · MINYAKITA: 17 NOV 2026";
-    var cheaper = 0, anyExp = false;
-    CMP.forEach(function(d){ if (d.riau < d.nas) cheaper++; if (d.riau > d.nas) anyExp = true; });
-    if (anyExp) document.getElementById("cmpDiffHead").textContent = "Selisih vs Nasional";
-    var lede = "Perbandingan apel-ke-apel — metodologi sama, dan tanggal sama untuk komoditas yang tersedia live. Pada " + fmtDM(date) + " " + dObj(date).y + ", ";
-    if (cheaper === CMP.length) lede += "<strong>Riau lebih murah dari rata-rata nasional pada kelima komoditas ini</strong>.";
-    else lede += "Riau lebih murah dari rata-rata nasional pada <strong>" + cheaper + " dari " + CMP.length + " komoditas</strong> ini.";
-    lede += " Minyakita tetap data 17 November 2026 karena tidak tersedia di API live.";
-    document.getElementById("cmpLede").innerHTML = lede;
-    document.getElementById("cmpTable").setAttribute("aria-label",
-      "Perbandingan harga Riau dan nasional dari data live " + fmtDM(date) + " " + dObj(date).y + "; Minyakita data 17 November 2026");
-    /* Catatan konteks Bapanas 17 Nov diganti di mode live: nilai aslinya
-       (beras premium 16.264, cabai merah besar 58.983) berasal dari seri
-       arsip dan bertentangan dengan nilai live pada tabel di atasnya. */
-    document.getElementById("cmpNote").textContent =
-      "Catatan seri: angka Riau pada tabel ini mengikuti seri API baksosapi.com (skala PIHPS), bukan seri arsip Bapanas — jadi selisihnya terhadap mode arsip (misalnya beras medium Riau Rp13.496/kg pada arsip 17 Nov 2026) adalah pergantian seri sumber, bukan kenaikan harga dalam sehari.";
-  }
-
   /* ----- Harga per Provinsi ----- */
   function buildActiveProv(){
     var active = {};
@@ -1578,7 +1444,6 @@
     var dataDate = (live.summary && live.summary.date) ? live.summary.date : maxD;
     if (live.summary) applySummary(live.summary.rows, dataDate);
     if (MAIN_SLUGS.some(function(s){ return !!live.prov[s]; })) applyProvinsi(dataDate);
-    if (dataDate) applyCompare(dataDate);
     applyRiau();
     finalize(dataDate);
   });
