@@ -286,6 +286,43 @@
   .diff{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13.5px;color:var(--down);white-space:nowrap}
   .diff::before{content:"−"}
 
+  /* ---------- Per provinsi ---------- */
+  .select-box{
+    flex:0 1 360px;display:flex;align-items:center;gap:10px;
+    background:var(--paper);border:1.5px solid var(--navy);border-radius:4px;padding:0 14px;
+    color:var(--ink-3);
+  }
+  .select-box svg{flex:0 0 auto}
+  .select-box select{
+    flex:1;background:none;border:0;outline:0;color:var(--ink);
+    font:inherit;font-size:15px;font-weight:600;min-height:44px;min-width:0;cursor:pointer;
+  }
+  .prov-head{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;
+    padding:18px 20px 14px;border-bottom:1px solid var(--line-soft);
+  }
+  .prov-head h3{margin:0;font-family:"Archivo",sans-serif;font-size:24px;font-weight:800}
+  .prov-head .prov-head-note{font-size:12.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+  .vs{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;white-space:nowrap}
+  .vs.cheap{color:var(--down)}
+  .vs.exp{color:var(--up)}
+  .vs.same,.vs.na{color:var(--ink-3);font-weight:500}
+  .prov-sub{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;margin:32px 0 6px}
+  .prov-sub-note{color:var(--ink-2);margin:0 0 16px;max-width:760px;font-size:14.5px}
+  .mv-row{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .mv-row:last-of-type{border-bottom:0}
+  .mv-name{font-weight:700;font-size:14.5px;line-height:1.35}
+  .mv-name span{display:block;font-weight:500;color:var(--ink-3);font-size:12.5px}
+  .mv-note{font-size:12.5px;color:var(--ink-2);margin:12px 0 0}
+  .mv-note b{color:var(--amber)}
+  .rank-num{font-family:"IBM Plex Mono",monospace;font-weight:700;color:var(--ink-3);width:34px}
+  .ext-prov{display:block;font-weight:700;font-size:14.5px}
+  .ext-price{display:block;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;color:var(--ink-2);margin-top:1px}
+  .ext-note{display:block;font-size:12px;color:var(--ink-3);font-weight:500}
+
   /* ---------- Pasar murah ---------- */
   .pasar{
     background:var(--navy);color:#eaf1f8;
@@ -316,6 +353,32 @@
   .foot-line{margin-top:22px;font-size:12.5px;color:#8fa5ba;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
   .foot-line .mono{font-family:"IBM Plex Mono",monospace}
 
+  /* ---------- Status live / arsip ---------- */
+  .live-badge{
+    float:right;display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.14);border-radius:99px;padding:2px 10px;
+    font-size:10.5px;letter-spacing:.1em;
+  }
+  .live-badge .dot{width:7px;height:7px;border-radius:50%;background:#8fa5ba;flex:0 0 auto}
+  .live-badge.is-live .dot{background:#3ecf8e;animation:pulse 1.8s ease-in-out infinite}
+  .live-badge.is-arsip{color:#ffb020}
+  .live-badge.is-arsip .dot{background:#ffb020}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .archive-note{
+    margin-top:18px;border:1.5px solid var(--amber);border-radius:4px;
+    background:var(--paper);color:var(--ink);padding:12px 16px;font-size:14.5px;
+  }
+  .archive-note strong{color:var(--amber);text-transform:uppercase;letter-spacing:.04em}
+  .diff.over{color:var(--up)}
+  .diff.over::before{content:"+"}
+  .diff.zero{color:var(--flat)}
+  .diff.zero::before{content:""}
+  .row-tag{
+    display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
+    color:var(--ink-3);margin-top:3px;letter-spacing:.02em;
+  }
+  .row-tag.live{color:var(--down);font-weight:700}
+
   @media (max-width:900px){
     .mast-grid{grid-template-columns:1fr}
     .ind-strip{grid-template-columns:1fr 1fr}
@@ -332,6 +395,8 @@
     .ptable th,.ptable td{padding:11px 12px}
     .ptable .hide-sm{display:none}
     .pasar-grid{grid-template-columns:1fr}
+    .rank-table .chg .pct{display:none}
+    .rank-table th,.rank-table td{padding:11px 10px}
     .sec-meta{text-align:left}
     .stable-list{grid-template-columns:1fr}
     .topbar .wrap{font-size:10.5px}
@@ -339,6 +404,7 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .ticker-track{animation:none}
+    .live-badge .dot{animation:none}
     .ticker{overflow-x:auto}
   }
 </style>
@@ -348,7 +414,7 @@
 <div class="topbar">
   <div class="wrap">
     <span>PIHPS · BPS · Bapanas · Disperindag Pekanbaru</span>
-    <span>Snapshot data · <b>16–17 November 2026</b></span>
+    <span id="topStatus">Snapshot data · <b>16–17 November 2026</b></span>
   </div>
 </div>
 
@@ -362,12 +428,12 @@
         <p class="mast-desc">Dashboard ini merangkum harga eceran kebutuhan pokok dari sumber resmi: <strong>PIHPS Bank Indonesia</strong>, <strong>BPS</strong>, <strong>Panel Harga Pangan Bapanas</strong>, dan <strong>Disperindag Kota Pekanbaru</strong>. Setiap angka diberi label sumber dan tanggalnya — angka dari sumber berbeda tidak dicampur dalam satu tabel, karena periode dan cakupan pencatatannya berbeda.</p>
       </div>
       <aside class="update-box" aria-label="Keterangan pembaruan data">
-        <div class="ub-head">Pembaruan Terakhir</div>
+        <div class="ub-head">Pembaruan Terakhir <span class="live-badge" id="liveBadge"><span class="dot"></span>Memuat…</span></div>
         <dl>
-          <div class="ub-row"><dt>Tanggal</dt><dd>Selasa, 17 Nov 2026</dd></div>
-          <div class="ub-row"><dt>Pukul</dt><dd>19.37 WIB</dd></div>
-          <div class="ub-row"><dt>Cakupan</dt><dd>Nasional · Riau · Pekanbaru</dd></div>
-          <div class="ub-row"><dt>Sumber</dt><dd>4 lembaga resmi</dd></div>
+          <div class="ub-row"><dt>Tanggal data</dt><dd id="ubDate">Selasa, 17 Nov 2026</dd></div>
+          <div class="ub-row"><dt>Halaman dimuat</dt><dd id="ubTime">19.37 WIB</dd></div>
+          <div class="ub-row"><dt>Cakupan</dt><dd>Nasional · 38 Provinsi · Riau · Pekanbaru</dd></div>
+          <div class="ub-row"><dt>Sumber</dt><dd id="ubSource">4 lembaga resmi</dd></div>
         </dl>
       </aside>
     </div>
@@ -376,6 +442,10 @@
     <div class="ticker-track" id="tickerTrack"></div>
   </div>
 </header>
+
+<div class="wrap">
+  <div class="archive-note" id="archiveBanner" hidden><strong>Mode arsip</strong> — data 17 Nov 2026, pembaruan live tidak tersedia saat ini. Halaman menampilkan snapshot terakhir yang tersimpan di dalamnya.</div>
+</div>
 
 <div class="wrap indicators">
   <div class="ind-strip" role="list" aria-label="Indikator inflasi BPS Oktober 2026">
@@ -411,6 +481,7 @@
     <a href="#nasional">Harga Nasional</a>
     <a href="#konteks">Konteks BPS</a>
     <a href="#riau-nasional">Riau vs Nasional</a>
+    <a href="#provinsi">Per Provinsi</a>
     <a href="#riau">Harga Riau</a>
     <a href="#pekanbaru">Pekanbaru</a>
     <a href="#pasar-murah">Pasar Murah</a>
@@ -424,9 +495,9 @@
   <section id="nasional" aria-labelledby="h-nasional">
     <div class="sec-head">
       <h2 id="h-nasional">Harga Nasional — <span class="hl">Pasar Tradisional</span></h2>
-      <div class="sec-meta">SUMBER: <b>PIHPS NASIONAL (BANK INDONESIA)</b><br />UPDATE 17 NOV 2026 · 19.37 WIB</div>
+      <div class="sec-meta" id="natMeta">SUMBER: <b>PIHPS NASIONAL (BANK INDONESIA)</b><br />UPDATE 17 NOV 2026 · 19.37 WIB</div>
     </div>
-    <p class="sec-lede">Harga eceran nasional per kilogram di pasar tradisional. Kolom perubahan adalah perubahan terhadap hari sebelumnya, seperti dilaporkan PIHPS pada 17 November 2026. Cabai rawit merah dan telur ayam ras berasal dari update pukul 10.20 WIB di hari yang sama.</p>
+    <p class="sec-lede" id="natLede">Harga eceran nasional per kilogram di pasar tradisional. Kolom perubahan adalah perubahan terhadap hari sebelumnya, seperti dilaporkan PIHPS pada 17 November 2026. Cabai rawit merah dan telur ayam ras berasal dari update pukul 10.20 WIB di hari yang sama.</p>
 
     <div class="controls">
       <label class="search">
@@ -444,7 +515,7 @@
     </div>
 
     <div class="panel">
-      <table class="ptable" aria-label="Harga bahan pokok nasional PIHPS 17 November 2026">
+      <table class="ptable" id="natTable" aria-label="Harga bahan pokok nasional PIHPS 17 November 2026">
         <thead>
           <tr>
             <th scope="col">Komoditas</th>
@@ -456,7 +527,7 @@
       </table>
       <div class="empty-msg" id="emptyMsg" hidden>Tidak ada komoditas yang cocok dengan pencarian itu.</div>
     </div>
-    <p class="cmp-table-note">Tanda “—” pada kolom perubahan berarti PIHPS tidak melaporkan perubahan untuk komoditas tersebut pada 17 November 2026.</p>
+    <p class="cmp-table-note" id="natNote">Tanda “—” pada kolom perubahan berarti PIHPS tidak melaporkan perubahan untuk komoditas tersebut pada 17 November 2026.</p>
   </section>
 
   <!-- ============ KONTEKS BPS ============ -->
@@ -507,9 +578,9 @@
   <section id="riau-nasional" aria-labelledby="h-riau-nasional">
     <div class="sec-head">
       <h2 id="h-riau-nasional">Riau <span class="hl">vs</span> Nasional</h2>
-      <div class="sec-meta">SUMBER: <b>PANEL HARGA PANGAN BAPANAS</b><br />17 NOV 2026 · TINGKAT KONSUMEN</div>
+      <div class="sec-meta" id="cmpMeta">SUMBER: <b>PANEL HARGA PANGAN BAPANAS</b><br />17 NOV 2026 · TINGKAT KONSUMEN</div>
     </div>
-    <p class="sec-lede">Perbandingan apel-ke-apel — metodologi dan tanggal sama. Kabar baiknya: pada 17 November 2026, <strong>Riau lebih murah dari rata-rata nasional pada kelima komoditas ini</strong>.</p>
+    <p class="sec-lede" id="cmpLede">Perbandingan apel-ke-apel — metodologi dan tanggal sama. Kabar baiknya: pada 17 November 2026, <strong>Riau lebih murah dari rata-rata nasional pada kelima komoditas ini</strong>.</p>
 
     <div class="panel" style="padding:22px">
       <div class="cmp-legend">
@@ -521,27 +592,153 @@
     </div>
 
     <div class="panel" style="margin-top:16px">
-      <table class="ptable" aria-label="Perbandingan harga Riau dan nasional menurut Bapanas 17 November 2026">
+      <table class="ptable" id="cmpTable" aria-label="Perbandingan harga Riau dan nasional menurut Bapanas 17 November 2026">
         <thead>
-          <tr><th scope="col">Komoditas</th><th scope="col" class="num">Riau</th><th scope="col" class="num">Nasional</th><th scope="col" class="num">Selisih (Riau lebih murah)</th></tr>
+          <tr><th scope="col">Komoditas</th><th scope="col" class="num">Riau</th><th scope="col" class="num">Nasional</th><th scope="col" class="num" id="cmpDiffHead">Selisih (Riau lebih murah)</th></tr>
         </thead>
-        <tbody>
+        <tbody id="cmpBody">
           <tr><td><span class="item-name">Beras medium</span> <span class="item-unit">/kg</span></td><td class="num price">13.496</td><td class="num price">13.728</td><td class="num"><span class="diff">232</span></td></tr>
           <tr><td><span class="item-name">Cabai rawit merah</span> <span class="item-unit">/kg</span></td><td class="num price">81.573</td><td class="num price">86.209</td><td class="num"><span class="diff">4.636</span></td></tr>
           <tr><td><span class="item-name">Bawang merah</span> <span class="item-unit">/kg</span></td><td class="num price">34.134</td><td class="num price">35.774</td><td class="num"><span class="diff">1.640</span></td></tr>
           <tr><td><span class="item-name">Telur ayam</span> <span class="item-unit">/kg</span></td><td class="num price">26.449</td><td class="num price">27.861</td><td class="num"><span class="diff">1.412</span></td></tr>
-          <tr><td><span class="item-name">Minyakita</span> <span class="item-unit">/liter</span></td><td class="num price">15.956</td><td class="num price">16.895</td><td class="num"><span class="diff">939</span></td></tr>
+          <tr><td><span class="item-name">Minyakita</span> <span class="item-unit">/liter</span> <span class="item-unit">(data 17 Nov 2026)</span></td><td class="num price">15.956</td><td class="num price">16.895</td><td class="num"><span class="diff">939</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="cmp-table-note">Konteks nasional Bapanas 17 Nov 2026: beras premium Rp16.264/kg · daging ayam ras Rp38.206/kg · cabai merah keriting Rp78.161/kg · cabai merah besar Rp58.983/kg · bawang putih bonggol Rp35.998/kg.</p>
+    <p class="cmp-table-note" id="cmpNote">Konteks nasional Bapanas 17 Nov 2026: beras premium Rp16.264/kg · daging ayam ras Rp38.206/kg · cabai merah keriting Rp78.161/kg · cabai merah besar Rp58.983/kg · bawang putih bonggol Rp35.998/kg.</p>
+  </section>
+
+  <!-- ============ HARGA PER PROVINSI ============ -->
+  <section id="provinsi" aria-labelledby="h-provinsi">
+    <div class="sec-head">
+      <h2 id="h-provinsi">Harga per <span class="hl">Provinsi</span></h2>
+      <div class="sec-meta" id="provMeta">SUMBER: <b>PANEL HARGA PANGAN BAPANAS</b><br />17 NOV 2026 · DIBANDING 16 NOV 2026</div>
+    </div>
+    <p class="sec-lede" id="provLede">Harga rata-rata eceran tingkat konsumen untuk <strong>38 provinsi</strong> dan 5 komoditas utama, dari Panel Harga Pangan Bapanas. Pilih provinsi untuk melihat detail harganya, atau pakai peringkat di bawah untuk membandingkan satu komoditas antarprovinsi. Semua perubahan adalah selisih <strong>17 November terhadap 16 November 2026</strong>.</p>
+
+    <div class="controls">
+      <label class="select-box">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        <select id="provSelect" aria-label="Pilih provinsi"></select>
+      </label>
+    </div>
+
+    <div class="panel">
+      <div class="prov-head">
+        <h3 id="provName">Riau</h3>
+        <span class="prov-head-note" id="provHeadNote">HARGA 17 NOV 2026 · PERUBAHAN VS 16 NOV 2026</span>
+      </div>
+      <table class="ptable" aria-label="Detail harga per komoditas untuk provinsi terpilih menurut Bapanas">
+        <thead>
+          <tr>
+            <th scope="col">Komoditas</th>
+            <th scope="col" class="num">Harga (Rp)</th>
+            <th scope="col" class="num" id="provChgHead">Perubahan vs 16 Nov</th>
+            <th scope="col" class="num hide-sm">vs Rata-rata Nasional</th>
+          </tr>
+        </thead>
+        <tbody id="provBody"></tbody>
+      </table>
+    </div>
+    <p class="cmp-table-note" id="provNote">Rata-rata nasional Bapanas 17 Nov 2026: beras medium Rp13.728/kg · cabai rawit merah Rp86.209/kg · bawang merah Rp35.774/kg · telur ayam Rp27.861/kg · Minyakita Rp16.895/liter. Tanda “—” berarti provinsi belum melaporkan komoditas itu: Papua Pegunungan (bawang merah, Minyakita) dan Papua Tengah (cabai rawit merah), pada kedua tanggal.</p>
+
+    <h3 class="prov-sub" id="mvHead">Pergerakan Terbesar, 16 → 17 Nov 2026</h3>
+    <p class="prov-sub-note">Perubahan satu hari terbesar antarprovinsi, dihitung dari data Bapanas kedua tanggal tersebut.</p>
+    <div class="hap-grid">
+      <div class="hap-card">
+        <h3>Kenaikan Terbesar</h3>
+        <p class="hap-sub">Berdasarkan persen perubahan</p>
+        <div id="mvUpRows">
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Minyakita · /liter</span></div><span class="chg up">▲ +7.725 <span class="pct">(+49,20%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Beras medium · /kg</span></div><span class="chg up">▲ +1.813 <span class="pct">(+13,07%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Bawang merah · /kg</span></div><span class="chg up">▲ +5.000 <span class="pct">(+9,09%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Kalimantan Selatan<span>Cabai rawit merah · /kg</span></div><span class="chg up">▲ +5.417 <span class="pct">(+5,10%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Papua Selatan<span>Cabai rawit merah · /kg</span></div><span class="chg up">▲ +6.500 <span class="pct">(+4,41%)</span></span></div>
+        </div>
+        <p class="mv-note" id="mvUpNote"><b>Catatan:</b> lonjakan Minyakita di Papua Selatan (+49,20% dalam sehari, Rp15.700 → Rp23.425) sangat besar — kemungkinan pelaporan di provinsi itu masih terbatas, tetapi angka inilah yang dilaporkan Bapanas.</p>
+      </div>
+      <div class="hap-card">
+        <h3>Penurunan Terbesar</h3>
+        <p class="hap-sub" id="mvDownSub">Semuanya cabai rawit merah</p>
+        <div id="mvDownRows">
+        <div class="mv-row"><div class="mv-name">Papua Barat Daya<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −11.705 <span class="pct">(−10,07%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Kalimantan Timur<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −4.555 <span class="pct">(−5,11%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Sumatera Utara<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −2.976 <span class="pct">(−4,14%)</span></span></div>
+        <div class="mv-row"><div class="mv-name">Sulawesi Barat<span>Cabai rawit merah · /kg</span></div><span class="chg down">▼ −4.266 <span class="pct">(−4,05%)</span></span></div>
+        </div>
+        <p class="mv-note" id="mvDownNote">Jawa Timur, Papua Selatan, dan Sumatera Barat mencatat kenaikan di kelima komoditas. Sebaliknya, Kalimantan Barat, Kalimantan Tengah, Maluku, Sulawesi Tenggara, dan Papua Pegunungan tidak mencatat satu pun komoditas naik.</p>
+      </div>
+    </div>
+
+    <h3 class="prov-sub">Peringkat Harga antar Provinsi</h3>
+    <p class="prov-sub-note" id="rankUnit">Pilih komoditas — tabel mengurutkan 38 provinsi dari harga tertinggi ke terendah pada 17 Nov 2026, lengkap dengan perubahannya terhadap 16 Nov 2026.</p>
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Pilih komoditas untuk peringkat" id="rankChips">
+        <button class="chip" type="button" data-ci="0" aria-pressed="false">Beras Medium</button>
+        <button class="chip" type="button" data-ci="1" aria-pressed="true">Cabai Rawit Merah</button>
+        <button class="chip" type="button" data-ci="2" aria-pressed="false">Bawang Merah</button>
+        <button class="chip" type="button" data-ci="3" aria-pressed="false">Telur Ayam</button>
+        <button class="chip" type="button" data-ci="4" aria-pressed="false">Minyakita</button>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="ptable rank-table" id="rankTable" aria-label="Peringkat harga komoditas per provinsi menurut Bapanas 17 November 2026">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Provinsi</th>
+            <th scope="col" class="num" id="rankPriceHead">Harga (Rp/kg)</th>
+            <th scope="col" class="num" id="rankChgHead">Perubahan vs 16 Nov</th>
+          </tr>
+        </thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+
+    <h3 class="prov-sub">Termurah &amp; Termahal per Komoditas</h3>
+    <p class="prov-sub-note" id="extNote">Harga rata-rata eceran 17 Nov 2026 menurut Bapanas.</p>
+    <div class="panel">
+      <table class="ptable" id="extTable" aria-label="Provinsi termurah dan termahal per komoditas menurut Bapanas 17 November 2026">
+        <thead>
+          <tr><th scope="col">Komoditas</th><th scope="col">Termurah</th><th scope="col">Termahal</th></tr>
+        </thead>
+        <tbody id="extBody">
+          <tr>
+            <td><span class="item-name">Beras medium</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Jambi</span><span class="ext-price">Rp12.631</span></td>
+            <td><span class="ext-prov">Papua Pegunungan</span><span class="ext-price">Rp20.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Cabai rawit merah</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Nusa Tenggara Barat</span><span class="ext-price">Rp53.508</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp154.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Bawang merah</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Nusa Tenggara Timur</span><span class="ext-price">Rp26.860</span></td>
+            <td><span class="ext-prov">Papua Selatan &amp; Papua Barat</span><span class="ext-price">Rp60.000</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Telur ayam</span> <span class="item-unit">/kg</span></td>
+            <td><span class="ext-prov">Jawa Timur</span><span class="ext-price">Rp23.132</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp51.429</span></td>
+          </tr>
+          <tr>
+            <td><span class="item-name">Minyakita</span> <span class="item-unit">/liter</span></td>
+            <td><span class="ext-prov">Bali</span><span class="ext-price">Rp15.700</span><span class="ext-note">Juga Banten, Gorontalo, Papua Tengah</span></td>
+            <td><span class="ext-prov">Papua Selatan</span><span class="ext-price">Rp23.425</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cmp-table-note">Bapanas memperbarui data sepanjang hari, jadi angka per provinsi bisa berbeda dengan harga di pasar tertentu. Data kosong (“—”) berarti provinsi belum melaporkan komoditas tersebut.</p>
   </section>
 
   <!-- ============ RIAU PER PROVINSI ============ -->
   <section id="riau" aria-labelledby="h-riau">
     <div class="sec-head">
       <h2 id="h-riau">Harga di <span class="hl">Riau</span> per Provinsi</h2>
-      <div class="sec-meta">SUMBER: <b>PIHPS PER PROVINSI</b> (VIA STATSINDO)<br />16 NOV 2026</div>
+      <div class="sec-meta" id="riauMeta">SUMBER: <b>PIHPS PER PROVINSI</b> (VIA STATSINDO)<br />16 NOV 2026</div>
     </div>
     <p class="sec-lede">Harga PIHPS tingkat provinsi untuk Riau, dibandingkan dengan Kepulauan Riau sebagai provinsi tetangga. Label komoditas mengikuti sumber apa adanya — varian beras dan cabai tidak dirinci oleh sumber ini. Minyak goreng dalam Rp per liter, sisanya Rp per kg.</p>
 
@@ -550,7 +747,7 @@
         <thead>
           <tr><th scope="col">Komoditas</th><th scope="col" class="num">Riau</th><th scope="col" class="num">Kepulauan Riau</th></tr>
         </thead>
-        <tbody>
+        <tbody id="riauBody">
           <tr><td><span class="item-name">Beras</span> <span class="item-unit">/kg</span></td><td class="num price">17.600</td><td class="num price">15.250</td></tr>
           <tr><td><span class="item-name">Cabai merah</span> <span class="item-unit">/kg</span></td><td class="num price">89.700</td><td class="num price">92.250</td></tr>
           <tr><td><span class="item-name">Cabai rawit</span> <span class="item-unit">/kg</span></td><td class="num price">75.550</td><td class="num price">79.450</td></tr>
@@ -562,7 +759,7 @@
         </tbody>
       </table>
     </div>
-    <p class="cmp-table-note">Catatan analis: daging ayam di Riau (Rp26.800/kg) jauh di bawah Kepulauan Riau (Rp40.850/kg), sementara beras Riau (Rp17.600/kg) lebih tinggi dari Kepri (Rp15.250/kg). Angka PIHPS provinsi ini berbeda tanggal dan cakupan dari tabel Bapanas di atas — jangan dicampur.</p>
+    <p class="cmp-table-note" id="riauNote">Catatan analis: daging ayam di Riau (Rp26.800/kg) jauh di bawah Kepulauan Riau (Rp40.850/kg), sementara beras Riau (Rp17.600/kg) lebih tinggi dari Kepri (Rp15.250/kg). Angka PIHPS provinsi ini berbeda tanggal dan cakupan dari tabel Bapanas di atas — jangan dicampur.</p>
   </section>
 
   <!-- ============ PEKANBARU ============ -->
@@ -621,16 +818,17 @@
       <li><b>PIHPS Nasional (Bank Indonesia)</b> — hargapangan.id; dikutip via koncodewe.com &amp; newshive.id, 17 Nov 2026.</li>
       <li><b>BPS</b> — dikutip via kowantaranews.com &amp; suaragarut.id, 16 Nov 2026; Rakor Pengendalian Inflasi Daerah 16 Nov 2026.</li>
       <li><b>PIHPS per provinsi</b> — statsindo.com, per 16 Nov 2026.</li>
-      <li><b>Panel Harga Pangan Bapanas</b> — dikutip via journalarta.com, 17 Nov 2026.</li>
+      <li><b>Panel Harga Pangan Bapanas</b> — dikutip via journalarta.com, 17 Nov 2026; termasuk data per provinsi (38 provinsi, 5 komoditas, 17 Nov dibanding 16 Nov 2026) untuk section Harga per Provinsi.</li>
+      <li><b>baksosapi.com (API live)</b> — situs pihak ketiga yang mengumpulkan data PIHPS Bank Indonesia dan Panel Harga Pangan Bapanas; bukan situs resmi kedua lembaga itu. Harga nasional, harga per provinsi, dan sebagian harga Riau diambil dari API ini setiap halaman dibuka (diperbarui ±06.00 &amp; 10.00 WIB). Minyakita tidak tersedia di API ini.</li>
       <li><b>Disperindag Kota Pekanbaru</b> — facebook.com/DPPKotaPekanbaru, 16 Nov 2026.</li>
       <li><b>Pemprov Riau / TPID</b> — mediacenter.riau.go.id &amp; riaunews.com, 16 Nov 2026.</li>
     </ul>
     <div class="caveat">
-      <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri sendiri dengan label sumber dan tanggalnya. Data di halaman ini adalah potret (snapshot) 16–17 November 2026, bukan deret waktu — halaman ini tidak menampilkan grafik tren harian.
+      <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri sendiri dengan label sumber dan tanggalnya. Harga nasional, harga per provinsi, dan sebagian harga Riau kini diambil live dari API baksosapi.com setiap halaman dibuka — baksosapi.com adalah cermin pihak ketiga atas data PIHPS dan Bapanas, bukan sumber resminya. Jika API tidak terjangkau, halaman otomatis menampilkan data arsip (snapshot) 16–17 November 2026 yang tetap tertanam di halaman ini, dan menandainya sebagai mode arsip. Minyakita, harga Kota Pekanbaru, Operasi Pasar Murah, dan indikator inflasi BPS tetap snapshot bertanggal sesuai labelnya. Halaman ini tidak menampilkan grafik tren harian. Pada section Harga per Provinsi, sel bertanda “—” berarti provinsi belum melaporkan komoditas itu pada tanggal datanya.
     </div>
     <div class="foot-line">
       <span>© 2026 Fakhri — Data Analyst</span>
-      <span class="mono">Snapshot data: 16–17 Nov 2026</span>
+      <span class="mono" id="footStatus">Snapshot data: 16–17 Nov 2026</span>
     </div>
   </div>
 </footer>
@@ -639,6 +837,11 @@
 (function(){
   "use strict";
   var fmt = function(n){ return n.toLocaleString("id-ID"); };
+  var esc = function(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  };
 
   /* ===== Ticker harga pilihan (PIHPS nasional, 17 Nov 2026) ===== */
   var TICKS = [
@@ -659,7 +862,7 @@
       if (t.chg === null){ c = '<span class="t-flat">Rp' + fmt(t.price) + '</span>'; }
       else if (t.chg > 0){ c = '<span class="t-up">Rp' + fmt(t.price) + ' ▲' + fmt(t.chg) + '</span>'; }
       else { c = '<span class="t-down">Rp' + fmt(t.price) + ' ▼' + fmt(Math.abs(t.chg)) + '</span>'; }
-      h += '<span class="tick"><span class="t-name">' + t.name + '</span>' + c + '</span>';
+      h += '<span class="tick"><span class="t-name">' + esc(t.name) + '</span>' + c + '</span>';
     });
     return h + '</div>';
   }
@@ -713,6 +916,9 @@
     if (it.chg === null || it.chg === undefined){
       return '<span class="chg flat" title="Tidak dilaporkan PIHPS">—</span>';
     }
+    if (it.chg === 0){
+      return '<span class="chg flat">0 <span class="pct">(0,00%)</span></span>';
+    }
     var up = it.chg > 0;
     var arrow = up ? "▲" : "▼";
     var sign = up ? "+" : "−";
@@ -765,11 +971,14 @@
     { name:"Cabai rawit merah", unit:"/kg",    riau:81573, nas:86209 },
     { name:"Bawang merah",      unit:"/kg",    riau:34134, nas:35774 },
     { name:"Telur ayam",        unit:"/kg",    riau:26449, nas:27861 },
-    { name:"Minyakita",         unit:"/liter", riau:15956, nas:16895 }
+    { name:"Minyakita",         unit:"/liter", riau:15956, nas:16895, snap:true }
   ];
+  function drawCmp(){
   var W = 880, rowH = 74, top = 8, labelW = 196, valW = 86;
   var chartW = W - labelW - valW;
   var maxV = 90000;
+  CMP.forEach(function(d){ if (d.riau > maxV) maxV = d.riau; if (d.nas > maxV) maxV = d.nas; });
+  maxV = Math.ceil(maxV * 1.04 / 10000) * 10000;
   var H = top + CMP.length * rowH + 6;
   var s = '<svg class="cmp-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Grafik batang perbandingan harga Riau dan nasional menurut Bapanas">';
   CMP.forEach(function(d, i){
@@ -777,7 +986,7 @@
     var rw = Math.max(3, d.riau / maxV * chartW);
     var nw = Math.max(3, d.nas / maxV * chartW);
     s += '<text x="0" y="' + (y + 20) + '" style="fill:var(--ink)" font-size="14.5" font-weight="700" font-family="Archivo, sans-serif">' + d.name + '</text>';
-    s += '<text x="0" y="' + (y + 40) + '" style="fill:var(--ink-3)" font-size="11.5" font-family="IBM Plex Mono, monospace">Rp ' + d.unit + '</text>';
+    s += '<text x="0" y="' + (y + 40) + '" style="fill:var(--ink-3)" font-size="11.5" font-family="IBM Plex Mono, monospace">Rp ' + d.unit + (d.snap ? ' · data 17 Nov 2026' : '') + '</text>';
     /* Riau */
     s += '<rect x="' + labelW + '" y="' + (y + 2) + '" width="' + rw.toFixed(1) + '" height="15" rx="2" style="fill:var(--riau)"></rect>';
     s += '<text x="' + (labelW + rw + 9) + '" y="' + (y + 14) + '" style="fill:var(--riau)" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace">' + fmt(d.riau) + '</text>';
@@ -790,6 +999,589 @@
   });
   s += '</svg>';
   document.getElementById("cmpChart").innerHTML = s;
+  }
+  drawCmp();
+
+  /* ===== Harga per Provinsi (Bapanas, 17 Nov vs 16 Nov 2026) =====
+     Urutan array per provinsi: [beras17, beras16, cabai17, cabai16,
+     bawang17, bawang16, telur17, telur16, minyakita17, minyakita16]
+     null = belum dilaporkan provinsi pada kedua tanggal. */
+  var COMMS = [
+    { name:"Beras Medium",      unit:"/kg" },
+    { name:"Cabai Rawit Merah", unit:"/kg" },
+    { name:"Bawang Merah",      unit:"/kg" },
+    { name:"Telur Ayam",        unit:"/kg" },
+    { name:"Minyakita",         unit:"/liter" }
+  ];
+  var NAS17 = [13728, 86209, 35774, 27861, 16895];
+  var PROV = {
+    "Aceh":[14253,14333,66250,66875,33209,33368,25772,26010,16445,16356],
+    "Bali":[13670,13663,63409,63334,26955,26857,26970,26970,15700,15718],
+    "Banten":[13191,13042,73000,74000,35550,34810,24905,24250,15700,15700],
+    "Bengkulu":[13806,13797,80607,80000,34606,33944,27468,27483,16588,16525],
+    "DI Yogyakarta":[13487,13490,66130,65043,33862,33621,24120,23980,16927,16927],
+    "DKI Jakarta":[13331,13379,78667,78067,40267,39867,25441,25531,17600,17600],
+    "Gorontalo":[14693,14711,133824,130000,39000,39667,31998,31955,15700,15700],
+    "Jambi":[12631,12631,78522,79273,28405,28722,27042,27041,15885,15885],
+    "Jawa Barat":[13096,13080,70581,70297,33727,32506,24682,24641,15835,15851],
+    "Jawa Tengah":[13327,13339,66082,65343,31517,31534,24073,23964,16023,16017],
+    "Jawa Timur":[12928,12897,62571,61758,29674,29424,23132,23071,16097,15989],
+    "Kalimantan Barat":[14493,14546,104915,106878,43000,43000,30863,30885,17958,18048],
+    "Kalimantan Selatan":[14196,14125,111667,106250,32316,31750,27365,27360,17120,17151],
+    "Kalimantan Tengah":[14189,14241,106341,107250,37796,37809,29804,29845,17304,17361],
+    "Kalimantan Timur":[14839,14932,84606,89161,38784,38670,30747,31296,16213,16467],
+    "Kalimantan Utara":[14176,14176,98043,100714,43522,43304,31677,31867,17906,17413],
+    "Kepulauan Bangka Belitung":[13770,13790,92909,94909,37485,37303,29983,29950,16467,16574],
+    "Kepulauan Riau":[12975,12943,92714,92318,41560,41577,29371,29313,16345,16345],
+    "Lampung":[13569,13717,69045,69080,30000,29862,25767,25794,16722,16620],
+    "Maluku":[14895,15107,131290,136176,42282,42738,33535,34321,18164,18539],
+    "Maluku Utara":[15427,15204,148095,142083,50385,50893,32874,32572,20655,20308],
+    "Nusa Tenggara Barat":[12832,12933,53508,53387,27273,27250,27870,28246,16133,15996],
+    "Nusa Tenggara Timur":[13922,13924,58000,56786,26860,26476,30417,29907,17779,17810],
+    "Papua":[15335,15210,106190,106429,54261,54261,35840,35840,19609,19609],
+    "Papua Barat":[15857,16000,131923,127500,60000,62500,37536,37469,19570,19570],
+    "Papua Barat Daya":[15078,15513,104545,116250,51944,52143,37289,38115,18814,18675],
+    "Papua Pegunungan":[20000,20000,140000,140000,null,null,50000,50000,null,null],
+    "Papua Selatan":[15688,13875,154000,147500,60000,55000,51429,51250,23425,15700],
+    "Papua Tengah":[15173,15654,null,null,50000,50000,37611,37150,15700,15700],
+    "Riau":[13496,13513,81573,81494,34134,34026,26449,26585,15956,16096],
+    "Sulawesi Barat":[13331,13208,101050,105316,37435,37174,25429,25054,15994,16295],
+    "Sulawesi Selatan":[12781,12790,77013,78320,33350,33455,25039,25154,16330,16279],
+    "Sulawesi Tengah":[13832,13782,115833,115676,41205,41370,26979,27124,16257,16228],
+    "Sulawesi Tenggara":[13522,13534,92500,93000,38148,38265,26986,27114,18064,18195],
+    "Sulawesi Utara":[13620,13700,127042,130021,41149,41021,31576,31517,17426,17444],
+    "Sumatera Barat":[13108,13100,76065,75655,33763,33125,28816,28610,18094,18073],
+    "Sumatera Selatan":[13246,13255,71610,70814,33016,32867,25962,25730,16413,16296],
+    "Sumatera Utara":[14035,14056,68842,71818,31595,31527,27423,27709,17338,17181]
+  };
+
+  function provChgHTML(v17, v16){
+    if (v17 === null || v16 === null){
+      return '<span class="chg flat" title="Belum dilaporkan provinsi">—</span>';
+    }
+    var d = v17 - v16;
+    if (d === 0){
+      return '<span class="chg flat">0 <span class="pct">(0,00%)</span></span>';
+    }
+    var up = d > 0;
+    var p = ((v17 - v16) / v16 * 100).toLocaleString("id-ID",{minimumFractionDigits:2, maximumFractionDigits:2}).replace("-","");
+    var txt = (up ? "▲ +" : "▼ −") + fmt(Math.abs(d)) +
+              ' <span class="pct">(' + (up ? "+" : "−") + p + '%)</span>';
+    return '<span class="chg ' + (up ? "up" : "down") + '">' + txt + '</span>';
+  }
+
+  function vsHTML(v17, nas){
+    if (v17 === null) return '<span class="vs na">—</span>';
+    var d = v17 - nas;
+    if (d === 0) return '<span class="vs same">Sama dengan nasional</span>';
+    if (d < 0) return '<span class="vs cheap">−' + fmt(-d) + ' lebih murah</span>';
+    return '<span class="vs exp">+' + fmt(d) + ' lebih mahal</span>';
+  }
+
+  /* Pemilih provinsi + kartu detail */
+  var provSel = document.getElementById("provSelect");
+  var provNames = Object.keys(PROV).sort(function(a, b){ return a.localeCompare(b, "id"); });
+  provNames.forEach(function(name){
+    var o = document.createElement("option");
+    o.value = name;
+    o.textContent = name;
+    if (name === "Riau") o.selected = true;
+    provSel.appendChild(o);
+  });
+  function renderProv(){
+    var name = provSel.value;
+    var a = PROV[name];
+    document.getElementById("provName").textContent = name;
+    var html = "";
+    COMMS.forEach(function(c, i){
+      var v17 = a[i * 2], v16 = a[i * 2 + 1];
+      /* Di mode live, komoditas yang tidak live (selalu Minyakita, atau yang
+         datanya gagal diambil) tetap memakai arsip 17 Nov vs 16 Nov — beri
+         tag tanggal pada barisnya agar tidak terbaca sebagai perubahan
+         terhadap hari sebelum tanggal live pada header kolom. */
+      var tag = (liveProvDate && commLive && !commLive[i])
+        ? '<span class="row-tag">data 17 Nov · vs 16 Nov</span>' : '';
+      html += '<tr><td><span class="item-name">' + c.name + '</span> <span class="item-unit">' + c.unit + '</span>' + tag + '</td>' +
+              '<td class="num price">' + (v17 === null ? "—" : fmt(v17)) + '</td>' +
+              '<td class="num">' + provChgHTML(v17, v16) + '</td>' +
+              '<td class="num hide-sm">' + vsHTML(v17, NAS17[i]) + '</td></tr>';
+    });
+    document.getElementById("provBody").innerHTML = html;
+  }
+  provSel.addEventListener("change", renderProv);
+  renderProv();
+
+  /* Tabel peringkat antarprovinsi */
+  var rankCi = 1;
+  function renderRank(){
+    var rows = provNames.map(function(name){
+      var a = PROV[name];
+      return { name:name, v17:a[rankCi * 2], v16:a[rankCi * 2 + 1] };
+    });
+    rows.sort(function(x, y){
+      if (x.v17 === null) return 1;
+      if (y.v17 === null) return -1;
+      return y.v17 - x.v17;
+    });
+    var html = "";
+    rows.forEach(function(r, i){
+      html += '<tr><td class="rank-num">' + (i + 1) + '</td>' +
+              '<td><span class="item-name">' + esc(r.name) + '</span></td>' +
+              '<td class="num price">' + (r.v17 === null ? "—" : fmt(r.v17)) + '</td>' +
+              '<td class="num">' + provChgHTML(r.v17, r.v16) + '</td></tr>';
+    });
+    document.getElementById("rankBody").innerHTML = html;
+    document.getElementById("rankPriceHead").textContent =
+      "Harga (Rp" + COMMS[rankCi].unit + ")";
+    if (liveProvDate){
+      /* Minyakita selalu data arsip 17 Nov 2026, jadi perubahannya terhadap
+         16 Nov — bukan terhadap hari sebelum tanggal live. */
+      var chgBase = (rankCi === 4) ? "2026-11-17" : liveProvDate;
+      document.getElementById("rankChgHead").textContent =
+        "Perubahan vs " + fmtDayMon(prevISO(chgBase));
+    }
+  }
+  document.getElementById("rankChips").addEventListener("click", function(e){
+    var btn = e.target.closest(".chip");
+    if (!btn) return;
+    rankCi = parseInt(btn.getAttribute("data-ci"), 10);
+    var chips = this.querySelectorAll(".chip");
+    for (var i = 0; i < chips.length; i++){
+      chips[i].setAttribute("aria-pressed", chips[i] === btn ? "true" : "false");
+    }
+    renderRank();
+  });
+  renderRank();
+
+  /* ============================================================
+     LAPISAN DATA LIVE — baksosapi.com
+     Cermin pihak ketiga atas PIHPS Bank Indonesia & Panel Harga
+     Pangan Bapanas. Semua data statis di atas tetap dipertahankan
+     sebagai cadangan: fetch yang gagal membuat bagiannya memakai
+     snapshot 16–17 Nov 2026 dengan labelnya sendiri.
+     ============================================================ */
+  var API = "https://baksosapi.com/api/v1";
+  var BULAN_P = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+  var BULAN_S = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  var HARI = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  function dObj(iso){ var p = String(iso).split("-"); return { y:+p[0], m:+p[1], d:+p[2] }; }
+  function fmtLong(iso){ var t = dObj(iso); var wd = new Date(Date.UTC(t.y, t.m - 1, t.d)).getUTCDay(); return HARI[wd] + ", " + t.d + " " + BULAN_S[t.m - 1] + " " + t.y; }
+  function fmtShort(iso){ var t = dObj(iso); return t.d + " " + BULAN_S[t.m - 1] + " " + t.y; }
+  function fmtDM(iso){ var t = dObj(iso); return t.d + " " + BULAN_P[t.m - 1]; }
+  function fmtDayMon(iso){ var t = dObj(iso); return t.d + " " + BULAN_S[t.m - 1]; }
+  function prevISO(iso){
+    var t = dObj(iso);
+    var dt = new Date(Date.UTC(t.y, t.m - 1, t.d) - 864e5);
+    function z(n){ return (n < 10 ? "0" : "") + n; }
+    return dt.getUTCFullYear() + "-" + z(dt.getUTCMonth() + 1) + "-" + z(dt.getUTCDate());
+  }
+  function rangeLabel(iso){
+    var pv = prevISO(iso), a = dObj(pv), b = dObj(iso);
+    if (a.m === b.m && a.y === b.y) return a.d + " → " + b.d + " " + BULAN_S[b.m - 1] + " " + b.y;
+    return fmtShort(pv) + " → " + fmtShort(iso);
+  }
+  function fetchJSON(url){
+    return new Promise(function(resolve){
+      var ctl = ("AbortController" in window) ? new AbortController() : null;
+      var timer = setTimeout(function(){ if (ctl) ctl.abort(); }, 8000);
+      fetch(url, ctl ? { signal: ctl.signal } : {})
+        .then(function(r){ if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+        .then(function(j){ clearTimeout(timer); resolve(j); })
+        .catch(function(){ clearTimeout(timer); resolve(null); });
+    });
+  }
+  /* Sanitasi data API (sumber pihak ketiga): angka harus benar-benar
+     numerik dan tanggal harus berformat ISO, selain itu dibuang. */
+  function numOrNull(v){ var n = Number(v); return isFinite(n) ? n : null; }
+  function validDate(v){ return (typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v)) ? v : null; }
+
+  /* Jam halaman dimuat (WIB) pada kotak Pembaruan Terakhir */
+  (function(){
+    try {
+      var t = new Intl.DateTimeFormat("id-ID", { timeZone:"Asia/Jakarta", hour:"2-digit", minute:"2-digit", hour12:false }).format(new Date());
+      document.getElementById("ubTime").textContent = t + " WIB";
+    } catch (e) { /* biarkan nilai snapshot */ }
+  })();
+
+  var MAIN_SLUGS = ["beras-medium", "cabai-rawit", "bawang-merah", "telur-ayam"];
+  var EXTRA_SLUGS = ["cabai-merah", "bawang-putih", "daging-ayam", "minyak-goreng"];
+  var ALL_PROV_SLUGS = MAIN_SLUGS.concat(EXTRA_SLUGS);
+  var live = { summary:null, bySlug:null, prov:{}, any:false, maxProvDate:null };
+  var commLive = [false, false, false, false, false]; /* Minyakita tidak pernah live */
+  var liveProvDate = null; /* tanggal terbaru dari payload provinsi (bisa beda dari ringkasan nasional) */
+
+  /* ----- Ringkasan nasional → ticker + tabel nasional ----- */
+  var CAT_DEFS = [
+    { id:"beras", label:"Beras" },
+    { id:"bawang", label:"Bawang" },
+    { id:"cabai", label:"Cabai" },
+    { id:"protein", label:"Protein" },
+    { id:"minyak-gula", label:"Minyak Goreng & Gula" }
+  ];
+  var NAT_MAP = [
+    { cat:0, slug:"beras-premium", name:"Beras Premium" },
+    { cat:0, slug:"beras-medium",  name:"Beras Medium" },
+    { cat:1, slug:"bawang-merah",  name:"Bawang Merah" },
+    { cat:1, slug:"bawang-putih",  name:"Bawang Putih" },
+    { cat:2, slug:"cabai-merah",   name:"Cabai Merah" },
+    { cat:2, slug:"cabai-rawit",   name:"Cabai Rawit Merah" },
+    { cat:3, slug:"daging-sapi",   name:"Daging Sapi" },
+    { cat:3, slug:"daging-ayam",   name:"Daging Ayam Ras" },
+    { cat:3, slug:"telur-ayam",    name:"Telur Ayam Ras" },
+    { cat:4, slug:"minyak-goreng", name:"Minyak Goreng" },
+    { cat:4, slug:"gula-pasir",    name:"Gula Pasir" }
+  ];
+  function applySummary(rows, date){
+    var bySlug = {};
+    rows.forEach(function(r){ bySlug[r.slug] = r; });
+    live.bySlug = bySlug;
+    /* Ticker dari ringkasan live */
+    TICKS = rows.map(function(r){
+      return { name:r.name, price:r.avg, chg:(typeof r.prev === "number") ? r.avg - r.prev : null };
+    });
+    var one = tickHTML();
+    document.getElementById("tickerTrack").innerHTML =
+      one + one.replace('<div class="tick-set">', '<div class="tick-set" aria-hidden="true">');
+    /* Tabel nasional: 11 komoditas live dalam 5 kategori yang sama */
+    var cats = CAT_DEFS.map(function(c){ return { id:c.id, label:c.label, items:[] }; });
+    NAT_MAP.forEach(function(m){
+      var r = bySlug[m.slug];
+      if (!r) return;
+      cats[m.cat].items.push({
+        name: m.name, price: r.avg,
+        chg: (typeof r.prev === "number") ? r.avg - r.prev : null,
+        pct: (typeof r.changePct === "number") ? r.changePct * 100 : null
+      });
+    });
+    CATS = cats;
+    render();
+    if (!date) return;
+    document.getElementById("natMeta").innerHTML =
+      "SUMBER: <b>PIHPS &amp; BAPANAS VIA BAKSOSAPI.COM</b><br />DATA " + fmtShort(date).toUpperCase() + " · LIVE";
+    document.getElementById("natTable").setAttribute("aria-label",
+      "Harga bahan pokok nasional PIHPS & Bapanas via baksosapi.com, data live " + fmtDM(date) + " " + dObj(date).y);
+    document.getElementById("natLede").textContent =
+      "Harga eceran nasional per kilogram di pasar tradisional — 11 komoditas yang diambil live dari API baksosapi.com (cermin data PIHPS Bank Indonesia & Panel Harga Pangan Bapanas) setiap halaman ini dibuka. Kolom perubahan adalah selisih terhadap hari sebelumnya (" + fmtShort(prevISO(date)) + "). Komoditas “Cabai Merah” memakai nama sesuai API — API tidak merinci variannya, jadi jangan disamakan dengan “cabai merah besar” PIHPS pada data arsip.";
+    document.getElementById("natNote").textContent =
+      "Tanda “—” pada kolom perubahan berarti API tidak melaporkan harga kemarin untuk komoditas tersebut.";
+  }
+
+  /* ----- Riau vs Nasional ----- */
+  function renderCmpTable(){
+    var html = "";
+    CMP.forEach(function(d){
+      var df = d.nas - d.riau, cell;
+      if (df > 0) cell = '<span class="diff">' + fmt(df) + '</span>';
+      else if (df < 0) cell = '<span class="diff over">' + fmt(-df) + '</span>';
+      else cell = '<span class="diff zero">0</span>';
+      html += '<tr><td><span class="item-name">' + d.name + '</span> <span class="item-unit">' + d.unit + '</span>' +
+              (d.snap ? ' <span class="item-unit">(data 17 Nov 2026)</span>' : '') + '</td>' +
+              '<td class="num price">' + fmt(d.riau) + '</td>' +
+              '<td class="num price">' + fmt(d.nas) + '</td>' +
+              '<td class="num">' + cell + '</td></tr>';
+    });
+    document.getElementById("cmpBody").innerHTML = html;
+  }
+  function applyCompare(date){
+    var changed = false;
+    if (live.bySlug){
+      MAIN_SLUGS.forEach(function(slug, i){
+        var r = live.bySlug[slug];
+        if (r){ CMP[i].nas = r.avg; changed = true; }
+      });
+    }
+    MAIN_SLUGS.forEach(function(slug, i){
+      var map = live.prov[slug];
+      if (map && map["Riau"]){ CMP[i].riau = map["Riau"].price; changed = true; }
+    });
+    if (!changed) return;
+    drawCmp();
+    renderCmpTable();
+    document.getElementById("cmpMeta").innerHTML =
+      "SUMBER: <b>PIHPS &amp; BAPANAS VIA BAKSOSAPI.COM</b><br />" + fmtShort(date).toUpperCase() + " · TINGKAT KONSUMEN · MINYAKITA: 17 NOV 2026";
+    var cheaper = 0, anyExp = false;
+    CMP.forEach(function(d){ if (d.riau < d.nas) cheaper++; if (d.riau > d.nas) anyExp = true; });
+    if (anyExp) document.getElementById("cmpDiffHead").textContent = "Selisih vs Nasional";
+    var lede = "Perbandingan apel-ke-apel — metodologi sama, dan tanggal sama untuk komoditas yang tersedia live. Pada " + fmtDM(date) + " " + dObj(date).y + ", ";
+    if (cheaper === CMP.length) lede += "<strong>Riau lebih murah dari rata-rata nasional pada kelima komoditas ini</strong>.";
+    else lede += "Riau lebih murah dari rata-rata nasional pada <strong>" + cheaper + " dari " + CMP.length + " komoditas</strong> ini.";
+    lede += " Minyakita tetap data 17 November 2026 karena tidak tersedia di API live.";
+    document.getElementById("cmpLede").innerHTML = lede;
+    document.getElementById("cmpTable").setAttribute("aria-label",
+      "Perbandingan harga Riau dan nasional dari data live " + fmtDM(date) + " " + dObj(date).y + "; Minyakita data 17 November 2026");
+    /* Catatan konteks Bapanas 17 Nov diganti di mode live: nilai aslinya
+       (beras premium 16.264, cabai merah besar 58.983) berasal dari seri
+       arsip dan bertentangan dengan nilai live pada tabel di atasnya. */
+    document.getElementById("cmpNote").textContent =
+      "Catatan seri: angka Riau pada tabel ini mengikuti seri API baksosapi.com (skala PIHPS), bukan seri arsip Bapanas — jadi selisihnya terhadap mode arsip (misalnya beras medium Riau Rp13.496/kg pada arsip 17 Nov 2026) adalah pergantian seri sumber, bukan kenaikan harga dalam sehari.";
+  }
+
+  /* ----- Harga per Provinsi ----- */
+  function buildActiveProv(){
+    var active = {};
+    Object.keys(PROV).forEach(function(name){ active[name] = PROV[name].slice(); });
+    MAIN_SLUGS.forEach(function(slug, i){
+      var map = live.prov[slug];
+      if (!map) return;
+      commLive[i] = true;
+      Object.keys(active).forEach(function(name){
+        var row = map[name];
+        active[name][i * 2] = row ? row.price : null;
+        active[name][i * 2 + 1] = row ? row.prev : null;
+      });
+      Object.keys(map).forEach(function(name){
+        if (!active[name]){
+          var arr = [null, null, null, null, null, null, null, null, null, null];
+          arr[i * 2] = map[name].price;
+          arr[i * 2 + 1] = map[name].prev;
+          active[name] = arr;
+        }
+      });
+    });
+    return active;
+  }
+  function rebuildProvSelect(){
+    var cur = provSel.value;
+    provNames = Object.keys(PROV).sort(function(a, b){ return a.localeCompare(b, "id"); });
+    provSel.innerHTML = "";
+    provNames.forEach(function(name){
+      var o = document.createElement("option");
+      o.value = name;
+      o.textContent = name;
+      provSel.appendChild(o);
+    });
+    provSel.value = PROV[cur] ? cur : "Riau";
+  }
+  function joinNames(names){
+    if (names.length <= 1) return names.join("");
+    if (names.length === 2) return names[0] + " & " + names[1];
+    return names.slice(0, -1).join(", ") + " & " + names[names.length - 1];
+  }
+  function renderExtremesLive(date){
+    var html = "";
+    COMMS.forEach(function(c, i){
+      var min = null, max = null, minN = [], maxN = [];
+      provNames.forEach(function(name){
+        var v = PROV[name][i * 2];
+        if (v === null) return;
+        if (min === null || v < min){ min = v; minN = [name]; } else if (v === min) minN.push(name);
+        if (max === null || v > max){ max = v; maxN = [name]; } else if (v === max) maxN.push(name);
+      });
+      if (min === null) return;
+      html += '<tr><td><span class="item-name">' + c.name + '</span> <span class="item-unit">' + c.unit + '</span>' +
+              (i === 4 ? '<span class="ext-note">Data 17 Nov 2026</span>' : '') + '</td>' +
+              '<td><span class="ext-prov">' + esc(joinNames(minN)) + '</span><span class="ext-price">Rp' + fmt(min) + '</span></td>' +
+              '<td><span class="ext-prov">' + esc(joinNames(maxN)) + '</span><span class="ext-price">Rp' + fmt(max) + '</span></td></tr>';
+    });
+    document.getElementById("extBody").innerHTML = html;
+    document.getElementById("extNote").textContent =
+      "Harga rata-rata eceran " + fmtShort(date) + " dari data live · Minyakita: data 17 Nov 2026.";
+    document.getElementById("extTable").setAttribute("aria-label",
+      "Provinsi termurah dan termahal per komoditas dari data live " + fmtDM(date) + " " + dObj(date).y + "; Minyakita data 17 November 2026");
+  }
+  function renderMoversLive(date){
+    var ups = [], downs = [];
+    COMMS.forEach(function(c, i){
+      if (!commLive[i]) return;
+      provNames.forEach(function(name){
+        var a = PROV[name];
+        var v17 = a[i * 2], v16 = a[i * 2 + 1];
+        if (v17 === null || v16 === null || v16 === 0 || v17 === v16) return;
+        var e = { prov:name, comm:c.name, unit:c.unit, v17:v17, v16:v16, pct:(v17 - v16) / v16 * 100 };
+        if (v17 > v16) ups.push(e); else downs.push(e);
+      });
+    });
+    ups.sort(function(a, b){ return b.pct - a.pct; });
+    downs.sort(function(a, b){ return a.pct - b.pct; });
+    function rowHTML(e){
+      return '<div class="mv-row"><div class="mv-name">' + esc(e.prov) + '<span>' + esc(e.comm) + ' · ' + e.unit + '</span></div>' + provChgHTML(e.v17, e.v16) + '</div>';
+    }
+    document.getElementById("mvUpRows").innerHTML =
+      ups.slice(0, 5).map(rowHTML).join("") || '<div class="mv-row"><div class="mv-name">Tidak ada kenaikan pada komoditas live</div></div>';
+    document.getElementById("mvDownRows").innerHTML =
+      downs.slice(0, 5).map(rowHTML).join("") || '<div class="mv-row"><div class="mv-name">Tidak ada penurunan pada komoditas live</div></div>';
+    document.getElementById("mvHead").textContent = "Pergerakan Terbesar, " + rangeLabel(date);
+    var topDowns = downs.slice(0, 5);
+    var allSame = topDowns.length > 0 && topDowns.every(function(e){ return e.comm === topDowns[0].comm; });
+    document.getElementById("mvDownSub").textContent =
+      allSame ? ("Semuanya " + topDowns[0].comm.toLowerCase()) : "Berdasarkan persen perubahan";
+    var extreme = ups.filter(function(e){ return e.pct > 10; });
+    if (extreme.length){
+      var e0 = extreme[0];
+      document.getElementById("mvUpNote").innerHTML =
+        "<b>Catatan:</b> ada kenaikan di atas 10% dalam sehari — terbesar " + esc(e0.comm.toLowerCase()) + " di " + esc(e0.prov) +
+        " (+" + e0.pct.toLocaleString("id-ID", { minimumFractionDigits:2, maximumFractionDigits:2 }) +
+        "%) — lonjakan sebesar itu kemungkinan karena pelaporan di provinsi tersebut masih terbatas, tetapi angka inilah yang dilaporkan sumber data.";
+    } else {
+      document.getElementById("mvUpNote").textContent =
+        "Dihitung dari data live " + fmtShort(date) + " terhadap hari sebelumnya, untuk komoditas yang tersedia di API. Minyakita tidak termasuk karena masih data 17 Nov 2026.";
+    }
+    document.getElementById("mvDownNote").textContent =
+      "Dihitung dari data live " + fmtShort(date) + " terhadap hari sebelumnya untuk komoditas live; Minyakita tidak termasuk karena belum tersedia di API (tetap data 17 Nov 2026).";
+  }
+  function applyProvinsi(date){
+    PROV = buildActiveProv();
+    if (live.bySlug){
+      MAIN_SLUGS.forEach(function(slug, i){
+        var r = live.bySlug[slug];
+        if (r) NAS17[i] = r.avg;
+      });
+    }
+    /* Tanggal section ini mengikuti payload provinsi itu sendiri: baris
+       provinsi bisa tertinggal sehari dari ringkasan nasional, jadi
+       tanggalnya ditampilkan apa adanya, bukan tanggal nasional. */
+    var provDate = live.maxProvDate || date;
+    liveProvDate = provDate;
+    rebuildProvSelect();
+    renderProv();
+    renderRank();
+    renderMoversLive(provDate);
+    renderExtremesLive(provDate);
+    document.getElementById("provMeta").innerHTML =
+      "SUMBER: <b>BAPANAS &amp; PIHPS VIA BAKSOSAPI.COM</b><br />DATA " + fmtShort(provDate).toUpperCase() + " · VS HARI SEBELUMNYA";
+    document.getElementById("provHeadNote").textContent =
+      "DATA LIVE " + fmtShort(provDate).toUpperCase() + " · PERUBAHAN VS HARI SEBELUMNYA";
+    document.getElementById("provChgHead").textContent =
+      "Perubahan vs " + fmtDayMon(prevISO(provDate));
+    document.getElementById("rankTable").setAttribute("aria-label",
+      "Peringkat harga komoditas per provinsi dari data live " + fmtDM(provDate) + " " + dObj(provDate).y);
+    document.getElementById("provLede").innerHTML =
+      "Harga rata-rata eceran tingkat konsumen untuk <strong>38 provinsi</strong> dan 5 komoditas utama. Beras medium, cabai rawit merah, bawang merah, dan telur ayam diambil <strong>live dari API baksosapi.com</strong> — cermin Panel Harga Pangan Bapanas dan PIHPS — setiap halaman dibuka; <strong>Minyakita tetap data 17 November 2026</strong> karena tidak tersedia di API itu. Pilih provinsi untuk melihat detail harganya, atau pakai peringkat di bawah untuk membandingkan satu komoditas antarprovinsi. Perubahan adalah selisih harga terbaru terhadap harga hari sebelumnya yang dilaporkan API untuk provinsi itu. Perhatian: angka live per provinsi mengikuti seri API baksosapi.com (skala PIHPS), bukan seri arsip Bapanas di halaman ini — selisih besar antara mode live dan mode arsip, misalnya pada beras medium, adalah pergantian seri sumber, bukan kenaikan harga dalam sehari.";
+    var avgParts = COMMS.map(function(c, i){ return c.name.toLowerCase() + " Rp" + fmt(NAS17[i]) + c.unit; });
+    var note = (live.bySlug ? "Rata-rata nasional " + fmtShort(date) : "Rata-rata nasional arsip 17 Nov 2026") +
+      ": " + avgParts.join(" · ") + (live.bySlug ? ". Minyakita: data 17 Nov 2026, perubahannya terhadap 16 Nov 2026." : ".");
+    var missing = [];
+    COMMS.forEach(function(c, i){
+      provNames.forEach(function(name){ if (PROV[name][i * 2] === null) missing.push(name + " (" + c.name.toLowerCase() + ")"); });
+    });
+    note += " Tanda “—” berarti provinsi belum melaporkan komoditas itu" + (missing.length ? ": " + missing.join(", ") + "." : ".");
+    var fellBack = [];
+    MAIN_SLUGS.forEach(function(slug, i){ if (!commLive[i]) fellBack.push(COMMS[i].name.toLowerCase()); });
+    if (fellBack.length) note += " Data live " + fellBack.join(", ") + " tidak terjangkau saat halaman dimuat — komoditas itu memakai data arsip 17 Nov 2026.";
+    document.getElementById("provNote").textContent = note;
+    document.getElementById("rankUnit").textContent =
+      "Pilih komoditas — tabel mengurutkan provinsi dari harga tertinggi ke terendah pada " + fmtShort(provDate) +
+      ", lengkap dengan perubahannya terhadap hari sebelumnya. Provinsi yang belum melaporkan komoditas itu tampil di bagian bawah dengan tanda “—”. Minyakita memakai data 17 Nov 2026.";
+  }
+
+  /* ----- Harga Riau per provinsi ----- */
+  var RIAU_ROWS = [
+    { name:"Beras",         unit:"/kg",    riau:17600, kepri:15250, slug:null },
+    { name:"Cabai merah",   unit:"/kg",    riau:89700, kepri:92250, slug:"cabai-merah" },
+    { name:"Cabai rawit",   unit:"/kg",    riau:75550, kepri:79450, slug:"cabai-rawit" },
+    { name:"Bawang merah",  unit:"/kg",    riau:34250, kepri:42950, slug:"bawang-merah" },
+    { name:"Bawang putih",  unit:"/kg",    riau:33150, kepri:29250, slug:"bawang-putih" },
+    { name:"Daging ayam",   unit:"/kg",    riau:26800, kepri:40850, slug:"daging-ayam" },
+    { name:"Telur ayam",    unit:"/kg",    riau:27650, kepri:29500, slug:"telur-ayam" },
+    { name:"Minyak goreng", unit:"/liter", riau:22050, kepri:20600, slug:"minyak-goreng" }
+  ];
+  function applyRiau(){
+    var any = RIAU_ROWS.some(function(r){ return r.slug && live.prov[r.slug] && live.prov[r.slug]["Riau"]; });
+    if (!any) return;
+    var html = "";
+    RIAU_ROWS.forEach(function(r){
+      var rv = r.riau, kv = r.kepri, unit = r.unit;
+      var tag = '<span class="row-tag">PIHPS · 16 Nov 2026</span>';
+      var map = r.slug ? live.prov[r.slug] : null;
+      if (map && map["Riau"]){
+        rv = map["Riau"].price;
+        if (map["Kepulauan Riau"]) kv = map["Kepulauan Riau"].price;
+        if (r.slug === "minyak-goreng") unit = "/kg";
+        tag = '<span class="row-tag live">API live' + (map["Riau"].date ? ' · ' + fmtShort(map["Riau"].date) : '') + '</span>';
+      }
+      html += '<tr><td><span class="item-name">' + r.name + '</span> <span class="item-unit">' + unit + '</span>' + tag + '</td>' +
+              '<td class="num price">' + fmt(rv) + '</td><td class="num price">' + fmt(kv) + '</td></tr>';
+    });
+    document.getElementById("riauBody").innerHTML = html;
+    document.getElementById("riauMeta").innerHTML =
+      "SUMBER: <b>PIHPS PER PROVINSI</b><br />SEBAGIAN LIVE · LABEL TANGGAL PER BARIS";
+    document.getElementById("riauNote").textContent =
+      "Baris bertanda “API live” diperbarui otomatis dari baksosapi.com (data PIHPS) per tanggal pada labelnya; minyak goreng live dikutip API per kg. Baris tanpa tanda live tetap snapshot PIHPS 16 Nov 2026 — angka live dan snapshot berasal dari tanggal berbeda, bandingkan dengan hati-hati.";
+  }
+
+  /* ----- Status masthead ----- */
+  function finalize(date){
+    var badge = document.getElementById("liveBadge");
+    if (live.any){
+      badge.className = "live-badge is-live";
+      badge.innerHTML = '<span class="dot"></span>LIVE';
+      document.getElementById("ubSource").textContent = "baksosapi.com · PIHPS & Bapanas";
+      if (date){
+        document.getElementById("ubDate").textContent = fmtLong(date);
+        document.getElementById("topStatus").innerHTML = "Data live · <b>" + fmtDM(date) + " " + dObj(date).y + "</b>";
+        document.getElementById("footStatus").textContent = "Data live: " + fmtShort(date) + " · arsip cadangan 16–17 Nov 2026";
+      }
+      if (!live.summary){
+        document.getElementById("natMeta").innerHTML =
+          "SUMBER: <b>PIHPS NASIONAL (BANK INDONESIA)</b><br />UPDATE 17 NOV 2026 · MODE ARSIP";
+      }
+    } else {
+      badge.className = "live-badge is-arsip";
+      badge.innerHTML = '<span class="dot"></span>ARSIP';
+      document.getElementById("archiveBanner").hidden = false;
+      document.getElementById("topStatus").innerHTML = "Mode arsip · <b>data 17 November 2026</b>";
+    }
+  }
+
+  /* ----- Ambil data live ----- */
+  var summaryP = fetchJSON(API + "/summary?level=3").then(function(j){
+    if (j && j.data && j.data.rows && j.data.rows.length){
+      var rows = [];
+      j.data.rows.forEach(function(r){
+        var avg = numOrNull(r.avg);
+        if (avg === null || typeof r.slug !== "string") return;
+        rows.push({
+          slug: r.slug,
+          name: String(r.name || r.slug),
+          avg: avg,
+          prev: numOrNull(r.prev),
+          changePct: numOrNull(r.changePct)
+        });
+      });
+      if (rows.length){
+        live.summary = { date: validDate(j.data.date), rows: rows };
+        live.any = true;
+      }
+    }
+  });
+  var provPs = ALL_PROV_SLUGS.map(function(slug){
+    return fetchJSON(API + "/prices/today?commodity=" + slug + "&level=3").then(function(j){
+      if (j && j.data && j.data.length){
+        var map = {};
+        j.data.forEach(function(r){
+          var price = numOrNull(r.price);
+          if (price === null || typeof r.regionName !== "string") return;
+          map[r.regionName] = {
+            price: price,
+            prev: numOrNull(r.prevPrice),
+            date: validDate(r.date)
+          };
+        });
+        if (Object.keys(map).length){
+          live.prov[slug] = map;
+          live.any = true;
+        }
+      }
+    });
+  });
+  Promise.all([summaryP].concat(provPs)).then(function(){
+    var maxD = null;
+    ALL_PROV_SLUGS.forEach(function(slug){
+      var map = live.prov[slug];
+      if (!map) return;
+      Object.keys(map).forEach(function(k){
+        var d = map[k].date;
+        if (d && (!maxD || d > maxD)) maxD = d;
+      });
+    });
+    live.maxProvDate = maxD;
+    var dataDate = (live.summary && live.summary.date) ? live.summary.date : maxD;
+    if (live.summary) applySummary(live.summary.rows, dataDate);
+    if (MAIN_SLUGS.some(function(s){ return !!live.prov[s]; })) applyProvinsi(dataDate);
+    if (dataDate) applyCompare(dataDate);
+    applyRiau();
+    finalize(dataDate);
+  });
 })();
 </script>
 </body>
