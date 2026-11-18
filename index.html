@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <link rel="icon" href="data:," />
-<title>Dashboard Harga Bahan Pokok — Nasional &amp; Riau</title>
+<title>Harga Bahan Pokok Indonesia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -32,7 +32,7 @@
     --down-bg:#e4f2ec;
     --flat:#5b6b82;
     --amber:#b7791f;
-    --riau:#175cd3;
+    --blue:#175cd3;
     --nas:#98a2b3;
     --track:#e3e8ef;
     --cat-bg:#e8edf3;
@@ -61,7 +61,7 @@
       --down-bg:rgba(62,207,142,.13);
       --flat:#9db0c4;
       --amber:#f5c86e;
-      --riau:#6aa6ff;
+      --blue:#6aa6ff;
       --nas:#7d8ea6;
       --track:#1d3049;
       --cat-bg:#16283d;
@@ -265,7 +265,7 @@
   .bar-label .bl-name{color:var(--ink-2);font-weight:600}
   .bar-label .bl-val{font-family:"IBM Plex Mono",monospace;font-weight:700;white-space:nowrap}
   .bar-track{height:10px;background:var(--track);border-radius:2px;overflow:hidden}
-  .bar-fill{height:100%;background:var(--riau)}
+  .bar-fill{height:100%;background:var(--blue)}
   .bar-fill.over{background:var(--up)}
   .bar-fill.hap{background:var(--nas)}
   .over-note{font-size:12.5px;color:var(--up);font-weight:700;margin-top:2px}
@@ -315,21 +315,6 @@
   .ext-price{display:block;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;color:var(--ink-2);margin-top:1px}
   .ext-note{display:block;font-size:12px;color:var(--ink-3);font-weight:500}
 
-  /* ---------- Pasar murah ---------- */
-  .pasar{
-    background:var(--navy);color:#eaf1f8;
-    border-radius:var(--radius);padding:26px;
-  }
-  .pasar h3{font-family:"Archivo",sans-serif;font-size:24px;font-weight:800;margin:0 0 6px;color:#fff}
-  .pasar p{color:#c3d2e2;margin:0 0 18px;max-width:720px}
-  .pasar p strong{color:#fff}
-  .pasar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .pasar-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:14px 16px}
-  .pasar-item .pi-name{font-size:13px;color:#c3d2e2;font-weight:600}
-  .pasar-item .pi-price{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:700;color:#ffa94d;margin-top:3px}
-  .pasar-item .pi-price span{font-size:12px;color:#93a9bf}
-  .pasar .pasar-src{margin:16px 0 0;font-size:13px;color:#93a9bf}
-
   /* ---------- Footer / sources ---------- */
   footer{margin-top:56px;padding:34px 0 46px;background:var(--navy-deep);color:#c9d6e4}
   footer h3{font-family:"Archivo",sans-serif;font-size:20px;margin:0 0 12px;font-weight:800;color:#fff}
@@ -373,7 +358,6 @@
     .ind:nth-child(2){border-right:0}
     .ind:nth-child(1),.ind:nth-child(2){border-bottom:1px solid var(--line-soft)}
     .hap-grid{grid-template-columns:1fr}
-    .pasar-grid{grid-template-columns:1fr 1fr}
     .src-list{grid-template-columns:1fr}
   }
   @media (max-width:560px){
@@ -382,7 +366,6 @@
     .ind .value{font-size:26px}
     .ptable th,.ptable td{padding:11px 12px}
     .ptable .hide-sm{display:none}
-    .pasar-grid{grid-template-columns:1fr}
     .rank-table .chg .pct{display:none}
     .rank-table th,.rank-table td{padding:11px 10px}
     .sec-meta{text-align:left}
@@ -401,7 +384,7 @@
 
 <div class="topbar">
   <div class="wrap">
-    <span>PIHPS · BPS · Bapanas · Disperindag Pekanbaru</span>
+    <span>PIHPS · BPS · Bapanas</span>
     <span id="topStatus">Snapshot data · <b>16–17 November 2026</b></span>
   </div>
 </div>
@@ -411,17 +394,17 @@
     <div class="mast-grid">
       <div>
         <div class="mast-kicker">Buletin Harga Pangan</div>
-        <h1>Harga Bahan Pokok<br /><span class="hl">Indonesia &amp; Riau</span></h1>
-        <p class="mast-lede">Berapa harga beras, cabai, dan telur hari ini — di pasar nasional sampai Pekanbaru.</p>
-        <p class="mast-desc">Dashboard ini merangkum harga eceran kebutuhan pokok dari sumber resmi: <strong>PIHPS Bank Indonesia</strong>, <strong>BPS</strong>, <strong>Panel Harga Pangan Bapanas</strong>, dan <strong>Disperindag Kota Pekanbaru</strong>. Setiap angka diberi label sumber dan tanggalnya — angka dari sumber berbeda tidak dicampur dalam satu tabel, karena periode dan cakupan pencatatannya berbeda.</p>
+        <h1>Harga Bahan Pokok<br /><span class="hl">Indonesia</span></h1>
+        <p class="mast-lede">Berapa harga beras, cabai, dan telur hari ini — di pasar nasional dan di setiap provinsi di Indonesia.</p>
+        <p class="mast-desc">Dashboard ini merangkum harga eceran kebutuhan pokok dari sumber resmi: <strong>PIHPS Bank Indonesia</strong>, <strong>BPS</strong>, dan <strong>Panel Harga Pangan Bapanas</strong>. Setiap angka diberi label sumber dan tanggalnya — angka dari sumber berbeda tidak dicampur dalam satu tabel, karena periode dan cakupan pencatatannya berbeda.</p>
       </div>
       <aside class="update-box" aria-label="Keterangan pembaruan data">
         <div class="ub-head">Pembaruan Terakhir <span class="live-badge" id="liveBadge"><span class="dot"></span>Memuat…</span></div>
         <dl>
           <div class="ub-row"><dt>Tanggal data</dt><dd id="ubDate">Selasa, 17 Nov 2026</dd></div>
           <div class="ub-row"><dt>Halaman dimuat</dt><dd id="ubTime">19.37 WIB</dd></div>
-          <div class="ub-row"><dt>Cakupan</dt><dd>Nasional · 38 Provinsi · Riau · Pekanbaru</dd></div>
-          <div class="ub-row"><dt>Sumber</dt><dd id="ubSource">4 lembaga resmi</dd></div>
+          <div class="ub-row"><dt>Cakupan</dt><dd id="ubCoverage">Nasional · 38 Provinsi</dd></div>
+          <div class="ub-row"><dt>Sumber</dt><dd id="ubSource">3 lembaga resmi</dd></div>
         </dl>
       </aside>
     </div>
@@ -469,9 +452,6 @@
     <a href="#nasional">Harga Nasional</a>
     <a href="#konteks">Konteks BPS</a>
     <a href="#provinsi">Per Provinsi</a>
-    <a href="#riau">Harga Riau</a>
-    <a href="#pekanbaru">Pekanbaru</a>
-    <a href="#pasar-murah">Pasar Murah</a>
     <a href="#sumber">Sumber Data</a>
   </div>
 </nav>
@@ -578,7 +558,7 @@
 
     <div class="panel">
       <div class="prov-head">
-        <h3 id="provName">Riau</h3>
+        <h3 id="provName">Aceh</h3>
         <span class="prov-head-note" id="provHeadNote">HARGA 17 NOV 2026 · PERUBAHAN VS 16 NOV 2026</span>
       </div>
       <table class="ptable" aria-label="Detail harga per komoditas untuk provinsi terpilih menurut Bapanas">
@@ -687,81 +667,6 @@
     <p class="cmp-table-note">Bapanas memperbarui data sepanjang hari, jadi angka per provinsi bisa berbeda dengan harga di pasar tertentu. Data kosong (“—”) berarti provinsi belum melaporkan komoditas tersebut.</p>
   </section>
 
-  <!-- ============ RIAU PER PROVINSI ============ -->
-  <section id="riau" aria-labelledby="h-riau">
-    <div class="sec-head">
-      <h2 id="h-riau">Harga di <span class="hl">Riau</span> per Provinsi</h2>
-      <div class="sec-meta" id="riauMeta">SUMBER: <b>PIHPS PER PROVINSI</b> (VIA STATSINDO)<br />16 NOV 2026</div>
-    </div>
-    <p class="sec-lede">Harga PIHPS tingkat provinsi untuk Riau, dibandingkan dengan Kepulauan Riau sebagai provinsi tetangga. Label komoditas mengikuti sumber apa adanya — varian beras dan cabai tidak dirinci oleh sumber ini. Minyak goreng dalam Rp per liter, sisanya Rp per kg.</p>
-
-    <div class="panel">
-      <table class="ptable" aria-label="Harga bahan pokok Riau dan Kepulauan Riau menurut PIHPS 16 November 2026">
-        <thead>
-          <tr><th scope="col">Komoditas</th><th scope="col" class="num">Riau</th><th scope="col" class="num">Kepulauan Riau</th></tr>
-        </thead>
-        <tbody id="riauBody">
-          <tr><td><span class="item-name">Beras</span> <span class="item-unit">/kg</span></td><td class="num price">17.600</td><td class="num price">15.250</td></tr>
-          <tr><td><span class="item-name">Cabai merah</span> <span class="item-unit">/kg</span></td><td class="num price">89.700</td><td class="num price">92.250</td></tr>
-          <tr><td><span class="item-name">Cabai rawit</span> <span class="item-unit">/kg</span></td><td class="num price">75.550</td><td class="num price">79.450</td></tr>
-          <tr><td><span class="item-name">Bawang merah</span> <span class="item-unit">/kg</span></td><td class="num price">34.250</td><td class="num price">42.950</td></tr>
-          <tr><td><span class="item-name">Bawang putih</span> <span class="item-unit">/kg</span></td><td class="num price">33.150</td><td class="num price">29.250</td></tr>
-          <tr><td><span class="item-name">Daging ayam</span> <span class="item-unit">/kg</span></td><td class="num price">26.800</td><td class="num price">40.850</td></tr>
-          <tr><td><span class="item-name">Telur ayam</span> <span class="item-unit">/kg</span></td><td class="num price">27.650</td><td class="num price">29.500</td></tr>
-          <tr><td><span class="item-name">Minyak goreng</span> <span class="item-unit">/liter</span></td><td class="num price">22.050</td><td class="num price">20.600</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cmp-table-note" id="riauNote">Catatan analis: daging ayam di Riau (Rp26.800/kg) jauh di bawah Kepulauan Riau (Rp40.850/kg), sementara beras Riau (Rp17.600/kg) lebih tinggi dari Kepri (Rp15.250/kg). Angka PIHPS provinsi ini berbeda tanggal dan cakupan dari tabel Bapanas di atas — jangan dicampur.</p>
-  </section>
-
-  <!-- ============ PEKANBARU ============ -->
-  <section id="pekanbaru" aria-labelledby="h-pekanbaru">
-    <div class="sec-head">
-      <h2 id="h-pekanbaru">Kota <span class="hl">Pekanbaru</span></h2>
-      <div class="sec-meta">SUMBER: <b>DISPERINDAG KOTA PEKANBARU</b><br />16 NOV 2026 · REKAP 11 PASAR</div>
-    </div>
-    <p class="sec-lede">Rekap harga kebutuhan pokok di 11 pasar Kota Pekanbaru. Perhatikan jarak harga beras program pemerintah <strong>SPHP (Rp13.100/kg)</strong> dibanding beras merek Belida dan Topi Koki (Rp17.850/kg).</p>
-
-    <div class="panel">
-      <table class="ptable" aria-label="Harga kebutuhan pokok Kota Pekanbaru 16 November 2026">
-        <thead>
-          <tr><th scope="col">Komoditas</th><th scope="col" class="num">Harga</th><th scope="col" class="hide-sm">Keterangan</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="item-name">Beras medium SPHP</span></td><td class="num price">13.100<span class="item-unit"> /kg</span></td><td class="hide-sm">Kemasan 5 kg: Rp63.625 (sesuai rekap sumber)</td></tr>
-          <tr><td><span class="item-name">Beras Belida</span></td><td class="num price">17.850<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Beras Topi Koki</span></td><td class="num price">17.850<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Bawang merah</span></td><td class="num price">36.818<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Bawang putih</span></td><td class="num price">32.545<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Daging ayam ras</span></td><td class="num price">25.700<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Telur ayam ras</span></td><td class="num price">27.840<span class="item-unit"> /kg</span></td><td class="hide-sm">Rp52.200 per papan</td></tr>
-          <tr><td><span class="item-name">Daging sapi</span></td><td class="num price">148.000<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Minyak goreng curah</span></td><td class="num price">20.700<span class="item-unit"> /liter</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Minyak goreng Bimoli 1L</span></td><td class="num price">23.300<span class="item-unit"> /liter</span></td><td class="hide-sm">—</td></tr>
-          <tr><td><span class="item-name">Gula pasir curah</span></td><td class="num price">19.800<span class="item-unit"> /kg</span></td><td class="hide-sm">—</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ============ PASAR MURAH ============ -->
-  <section id="pasar-murah" aria-labelledby="h-pasar">
-    <div class="pasar">
-      <h3 id="h-pasar">Operasi Pasar Murah Pemprov Riau</h3>
-      <p>Dijalankan TPID Pemprov Riau bersama PT Riau Pangan Bertuah pada <strong>16–20 November 2026</strong> di 6 lokasi — 5 di Pekanbaru dan 1 di Rokan Hulu. Harga di gerai pasar murah:</p>
-      <div class="pasar-grid">
-        <div class="pasar-item"><div class="pi-name">Beras SPHP</div><div class="pi-price">Rp60.000<span> /5 kg</span></div></div>
-        <div class="pasar-item"><div class="pi-name">Beras Anak Daro &amp; Sokan</div><div class="pi-price">Rp169.000<span> /10 kg</span></div></div>
-        <div class="pasar-item"><div class="pi-name">Gula pasir</div><div class="pi-price">Rp18.000<span> /kg</span></div></div>
-        <div class="pasar-item"><div class="pi-name">Minyakita</div><div class="pi-price">Rp15.500<span> /bungkus</span></div></div>
-        <div class="pasar-item"><div class="pi-name">Telur</div><div class="pi-price">Rp49.000<span> /papan</span></div></div>
-        <div class="pasar-item"><div class="pi-name">Garam Krista</div><div class="pi-price">Rp2.000<span> /200 g</span></div></div>
-      </div>
-      <p class="pasar-src">Beras Anak Daro &amp; Sokan setara Rp84.500 per 5 kg. Sumber: Media Center Pemprov Riau &amp; Riau News, 16 Nov 2026.</p>
-    </div>
-  </section>
-
 </main>
 
 <footer id="sumber">
@@ -770,14 +675,11 @@
     <ul class="src-list">
       <li><b>PIHPS Nasional (Bank Indonesia)</b> — hargapangan.id; dikutip via koncodewe.com &amp; newshive.id, 17 Nov 2026.</li>
       <li><b>BPS</b> — dikutip via kowantaranews.com &amp; suaragarut.id, 16 Nov 2026; Rakor Pengendalian Inflasi Daerah 16 Nov 2026.</li>
-      <li><b>PIHPS per provinsi</b> — statsindo.com, per 16 Nov 2026.</li>
       <li><b>Panel Harga Pangan Bapanas</b> — dikutip via journalarta.com, 17 Nov 2026; termasuk data per provinsi (38 provinsi, 5 komoditas, 17 Nov dibanding 16 Nov 2026) untuk section Harga per Provinsi.</li>
-      <li><b>baksosapi.com (API live)</b> — situs pihak ketiga yang mengumpulkan data PIHPS Bank Indonesia dan Panel Harga Pangan Bapanas; bukan situs resmi kedua lembaga itu. Harga nasional, harga per provinsi, dan sebagian harga Riau diambil dari API ini setiap halaman dibuka (diperbarui ±06.00 &amp; 10.00 WIB). Minyakita tidak tersedia di API ini.</li>
-      <li><b>Disperindag Kota Pekanbaru</b> — facebook.com/DPPKotaPekanbaru, 16 Nov 2026.</li>
-      <li><b>Pemprov Riau / TPID</b> — mediacenter.riau.go.id &amp; riaunews.com, 16 Nov 2026.</li>
+      <li><b>baksosapi.com (API live)</b> — situs pihak ketiga yang mengumpulkan data PIHPS Bank Indonesia dan Panel Harga Pangan Bapanas; bukan situs resmi kedua lembaga itu. Harga nasional dan harga per provinsi diambil dari API ini setiap halaman dibuka (diperbarui ±06.00 &amp; 10.00 WIB). Minyakita tidak tersedia di API ini.</li>
     </ul>
     <div class="caveat">
-      <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri sendiri dengan label sumber dan tanggalnya. Harga nasional, harga per provinsi, dan sebagian harga Riau kini diambil live dari API baksosapi.com setiap halaman dibuka — baksosapi.com adalah cermin pihak ketiga atas data PIHPS dan Bapanas, bukan sumber resminya. Jika API tidak terjangkau, halaman otomatis menampilkan data arsip (snapshot) 16–17 November 2026 yang tetap tertanam di halaman ini, dan menandainya sebagai mode arsip. Minyakita, harga Kota Pekanbaru, Operasi Pasar Murah, dan indikator inflasi BPS tetap snapshot bertanggal sesuai labelnya. Halaman ini tidak menampilkan grafik tren harian. Pada section Harga per Provinsi, sel bertanda “—” berarti provinsi belum melaporkan komoditas itu pada tanggal datanya.
+      <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri sendiri dengan label sumber dan tanggalnya. Harga nasional dan harga per provinsi kini diambil live dari API baksosapi.com setiap halaman dibuka — baksosapi.com adalah cermin pihak ketiga atas data PIHPS dan Bapanas, bukan sumber resminya. Jika API tidak terjangkau, halaman otomatis menampilkan data arsip (snapshot) 16–17 November 2026 yang tetap tertanam di halaman ini, dan menandainya sebagai mode arsip. Minyakita dan indikator inflasi BPS tetap snapshot bertanggal sesuai labelnya. Halaman ini tidak menampilkan grafik tren harian. Pada section Harga per Provinsi, sel bertanda “—” berarti provinsi belum melaporkan komoditas itu pada tanggal datanya.
     </div>
     <div class="foot-line">
       <span>© 2026 Fakhri — Data Analyst</span>
@@ -1001,7 +903,7 @@
     var o = document.createElement("option");
     o.value = name;
     o.textContent = name;
-    if (name === "Riau") o.selected = true;
+    if (name === "Aceh") o.selected = true;
     provSel.appendChild(o);
   });
   function renderProv(){
@@ -1120,8 +1022,7 @@
   })();
 
   var MAIN_SLUGS = ["beras-medium", "cabai-rawit", "bawang-merah", "telur-ayam"];
-  var EXTRA_SLUGS = ["cabai-merah", "bawang-putih", "daging-ayam", "minyak-goreng"];
-  var ALL_PROV_SLUGS = MAIN_SLUGS.concat(EXTRA_SLUGS);
+  var ALL_PROV_SLUGS = MAIN_SLUGS.slice();
   var live = { summary:null, bySlug:null, prov:{}, any:false, maxProvDate:null };
   var commLive = [false, false, false, false, false]; /* Minyakita tidak pernah live */
   var liveProvDate = null; /* tanggal terbaru dari payload provinsi (bisa beda dari ringkasan nasional) */
@@ -1216,7 +1117,7 @@
       o.textContent = name;
       provSel.appendChild(o);
     });
-    provSel.value = PROV[cur] ? cur : "Riau";
+    provSel.value = PROV[cur] ? cur : "Aceh";
   }
   function joinNames(names){
     if (names.length <= 1) return names.join("");
@@ -1330,41 +1231,6 @@
       ", lengkap dengan perubahannya terhadap hari sebelumnya. Provinsi yang belum melaporkan komoditas itu tampil di bagian bawah dengan tanda “—”. Minyakita memakai data 17 Nov 2026.";
   }
 
-  /* ----- Harga Riau per provinsi ----- */
-  var RIAU_ROWS = [
-    { name:"Beras",         unit:"/kg",    riau:17600, kepri:15250, slug:null },
-    { name:"Cabai merah",   unit:"/kg",    riau:89700, kepri:92250, slug:"cabai-merah" },
-    { name:"Cabai rawit",   unit:"/kg",    riau:75550, kepri:79450, slug:"cabai-rawit" },
-    { name:"Bawang merah",  unit:"/kg",    riau:34250, kepri:42950, slug:"bawang-merah" },
-    { name:"Bawang putih",  unit:"/kg",    riau:33150, kepri:29250, slug:"bawang-putih" },
-    { name:"Daging ayam",   unit:"/kg",    riau:26800, kepri:40850, slug:"daging-ayam" },
-    { name:"Telur ayam",    unit:"/kg",    riau:27650, kepri:29500, slug:"telur-ayam" },
-    { name:"Minyak goreng", unit:"/liter", riau:22050, kepri:20600, slug:"minyak-goreng" }
-  ];
-  function applyRiau(){
-    var any = RIAU_ROWS.some(function(r){ return r.slug && live.prov[r.slug] && live.prov[r.slug]["Riau"]; });
-    if (!any) return;
-    var html = "";
-    RIAU_ROWS.forEach(function(r){
-      var rv = r.riau, kv = r.kepri, unit = r.unit;
-      var tag = '<span class="row-tag">PIHPS · 16 Nov 2026</span>';
-      var map = r.slug ? live.prov[r.slug] : null;
-      if (map && map["Riau"]){
-        rv = map["Riau"].price;
-        if (map["Kepulauan Riau"]) kv = map["Kepulauan Riau"].price;
-        if (r.slug === "minyak-goreng") unit = "/kg";
-        tag = '<span class="row-tag live">API live' + (map["Riau"].date ? ' · ' + fmtShort(map["Riau"].date) : '') + '</span>';
-      }
-      html += '<tr><td><span class="item-name">' + r.name + '</span> <span class="item-unit">' + unit + '</span>' + tag + '</td>' +
-              '<td class="num price">' + fmt(rv) + '</td><td class="num price">' + fmt(kv) + '</td></tr>';
-    });
-    document.getElementById("riauBody").innerHTML = html;
-    document.getElementById("riauMeta").innerHTML =
-      "SUMBER: <b>PIHPS PER PROVINSI</b><br />SEBAGIAN LIVE · LABEL TANGGAL PER BARIS";
-    document.getElementById("riauNote").textContent =
-      "Baris bertanda “API live” diperbarui otomatis dari baksosapi.com (data PIHPS) per tanggal pada labelnya; minyak goreng live dikutip API per kg. Baris tanpa tanda live tetap snapshot PIHPS 16 Nov 2026 — angka live dan snapshot berasal dari tanggal berbeda, bandingkan dengan hati-hati.";
-  }
-
   /* ----- Status masthead ----- */
   function finalize(date){
     var badge = document.getElementById("liveBadge");
@@ -1444,7 +1310,6 @@
     var dataDate = (live.summary && live.summary.date) ? live.summary.date : maxD;
     if (live.summary) applySummary(live.summary.rows, dataDate);
     if (MAIN_SLUGS.some(function(s){ return !!live.prov[s]; })) applyProvinsi(dataDate);
-    applyRiau();
     finalize(dataDate);
   });
 })();
