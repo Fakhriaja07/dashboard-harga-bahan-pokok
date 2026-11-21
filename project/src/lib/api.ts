@@ -1,7 +1,7 @@
 // Lapisan data live — baksosapi.com (cermin pihak ketiga atas PIHPS Bank
 // Indonesia & Panel Harga Pangan Bapanas). Logika fetch + parsing dipindah
 // dari main.ts vanilla, tanpa perubahan perilaku.
-import type { ProvPriceRow, SummaryRow } from "../types";
+import type { HistoryPoint, ProvPriceRow, SummaryRow } from "../types";
 import { isRecord, numOrNull, validDate } from "./format";
 
 export const API = "https://baksosapi.com/api/v1";
@@ -113,4 +113,48 @@ export async function loadLiveData(): Promise<LiveFetchResult> {
     : null;
 
   return { summary, bySlug, prov, any, maxProvDate };
+}
+
+/** Ringkasan nasional untuk satu tanggal tertentu (endpoint /summary
+ *  menerima parameter date). Mengembalikan null bila tanggal itu tidak
+ *  punya data (mis. akhir pekan) atau fetch gagal. */
+export async function loadSummaryByDate(
+  date: string,
+): Promise<{ date: string | null; rows: SummaryRow[] } | null> {
+  const j: unknown = await fetchJSON(API + "/summary?level=3&date=" + encodeURIComponent(date));
+  return parseSummary(j);
+}
+
+function parseHistory(j: unknown): HistoryPoint[] | null {
+  if (!isRecord(j)) return null;
+  const data: unknown = j.data;
+  if (!isRecord(data)) return null;
+  const series: unknown = data.series;
+  if (!Array.isArray(series) || series.length === 0) return null;
+  const pts: HistoryPoint[] = [];
+  series.forEach((p) => {
+    if (!isRecord(p)) return;
+    const d = validDate(p.date);
+    const price = numOrNull(p.price);
+    if (d && price !== null) pts.push({ date: d, price });
+  });
+  return pts.length > 0 ? pts : null;
+}
+
+/** Riwayat harga nasional satu komoditas (endpoint /history). */
+export async function loadHistory(
+  slug: string,
+  from: string,
+  to: string,
+): Promise<HistoryPoint[] | null> {
+  const j: unknown = await fetchJSON(
+    API +
+      "/history?commodity=" +
+      encodeURIComponent(slug) +
+      "&level=3&from=" +
+      encodeURIComponent(from) +
+      "&to=" +
+      encodeURIComponent(to),
+  );
+  return parseHistory(j);
 }

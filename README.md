@@ -38,7 +38,9 @@ Mode arsip (snapshot 16–17 Nov 2026).
         │   ├── Ticker.tsx          ← ticker harga berjalan
         │   ├── Indicators.tsx      ← strip indikator inflasi BPS
         │   ├── NationalTable.tsx   ← tabel nasional + pencarian &
-        │   │                         filter kategori
+        │   │                         filter kategori + navigasi tanggal
+        │   ├── TrendChart.tsx      ← grafik tren harga per komoditas
+        │   │                         (data /history, SVG manual)
         │   ├── BpsContext.tsx      ← konteks inflasi dari BPS (statis)
         │   ├── ProvinceSection.tsx ← detail provinsi + peringkat +
         │   │                         Pergerakan Terbesar + Termurah &

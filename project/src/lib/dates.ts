@@ -66,6 +66,18 @@ export function prevISO(iso: string): string {
   return dt.getUTCFullYear() + "-" + z(dt.getUTCMonth() + 1) + "-" + z(dt.getUTCDate());
 }
 
+/** Geser tanggal ISO sejauh n hari (n boleh negatif). */
+export function addDaysISO(iso: string, n: number): string {
+  const t = dObj(iso);
+  const dt = new Date(Date.UTC(t.y, t.m - 1, t.d) + n * 864e5);
+  const z = (x: number): string => (x < 10 ? "0" : "") + x;
+  return dt.getUTCFullYear() + "-" + z(dt.getUTCMonth() + 1) + "-" + z(dt.getUTCDate());
+}
+
+/** Tanggal paling awal yang punya data di API (diverifikasi 21 Nov 2026:
+ *  /summary?date=2026-08-29 berisi data, 2026-08-28 kosong). */
+export const MIN_DATA_DATE = "2026-08-29";
+
 export function rangeLabel(iso: string): string {
   const pv = prevISO(iso);
   const a = dObj(pv);

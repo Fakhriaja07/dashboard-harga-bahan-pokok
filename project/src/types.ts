@@ -11,6 +11,14 @@ export interface PriceItem {
   price: number;
   chg: number | null;
   pct: number | null;
+  /** Slug API (hanya untuk item live; item arsip tidak punya slug). */
+  slug?: string;
+}
+
+/** Satu titik riwayat harga dari endpoint /history. */
+export interface HistoryPoint {
+  date: string;
+  price: number;
 }
 
 export interface CatGroup {
