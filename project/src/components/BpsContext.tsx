@@ -12,11 +12,6 @@ export default function BpsContext(): React.JSX.Element {
           OKT 2026 &amp; PEKAN KE-2 NOV 2026
         </div>
       </div>
-      <p className="sec-lede">
-        BPS mencatat rata-rata nasional cabai merah dan cabai rawit pada pekan ke-2 November 2026{" "}
-        <strong>jauh di atas batas atas Harga Acuan (HAP) konsumen</strong>. Empat komoditas disebut BPS
-        berstatus “stabil tinggi”: <strong>beras, minyak goreng, cabai merah, dan cabai rawit</strong>.
-      </p>
 
       <div className="hap-grid">
         <div className="hap-card">

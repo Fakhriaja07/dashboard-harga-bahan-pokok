@@ -106,8 +106,6 @@
     font-size:clamp(18px,2.4vw,23px);line-height:1.35;color:var(--ink);
     margin:0 0 12px;max-width:620px;
   }
-  .mast-desc{max-width:640px;color:var(--ink-2);margin:0;font-size:15.5px}
-  .mast-desc strong{color:var(--ink)}
   .update-box{border:2px solid var(--navy);background:var(--paper)}
   .update-box .ub-head{
     background:var(--navy);color:#fff;padding:9px 14px;
@@ -188,8 +186,6 @@
     background:var(--paper);padding:8px 12px;line-height:1.6;
   }
   .sec-meta b{color:var(--ink);font-weight:700}
-  .sec-lede{color:var(--ink-2);max-width:780px;margin:0 0 24px}
-  .sec-lede strong{color:var(--ink)}
 
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
   .panel + .panel{margin-top:16px}
@@ -271,8 +267,6 @@
   }
   .stable-item span{display:block;font-size:12px;color:var(--ink-3);font-weight:500;margin-top:2px}
 
-  .cmp-table-note{font-size:12.5px;color:var(--ink-3);margin-top:10px}
-
   /* ---------- Per provinsi ---------- */
   .select-box{
     flex:0 1 360px;display:flex;align-items:center;gap:10px;
@@ -295,7 +289,6 @@
   .vs.exp{color:var(--up)}
   .vs.same,.vs.na{color:var(--ink-3);font-weight:500}
   .prov-sub{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;margin:32px 0 6px}
-  .prov-sub-note{color:var(--ink-2);margin:0 0 16px;max-width:760px;font-size:14.5px}
   .mv-row{
     display:flex;justify-content:space-between;align-items:center;gap:12px;
     padding:10px 0;border-bottom:1px solid var(--line-soft);
@@ -303,8 +296,6 @@
   .mv-row:last-of-type{border-bottom:0}
   .mv-name{font-weight:700;font-size:14.5px;line-height:1.35}
   .mv-name span{display:block;font-weight:500;color:var(--ink-3);font-size:12.5px}
-  .mv-note{font-size:12.5px;color:var(--ink-2);margin:12px 0 0}
-  .mv-note b{color:var(--amber)}
   .rank-num{font-family:"IBM Plex Mono",monospace;font-weight:700;color:var(--ink-3);width:34px}
   .ext-prov{display:block;font-weight:700;font-size:14.5px}
   .ext-price{display:block;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;color:var(--ink-2);margin-top:1px}
@@ -317,11 +308,6 @@
   .src-list li{font-size:13.5px;color:#c9d6e4;padding-left:16px;position:relative}
   .src-list li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;background:var(--accent)}
   .src-list b{color:#fff}
-  .caveat{
-    border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:16px 18px;font-size:13.5px;color:#c9d6e4;
-    background:rgba(255,255,255,.05);
-  }
-  .caveat b{color:#ffb020}
   .foot-line{margin-top:22px;font-size:12.5px;color:#8fa5ba;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
   .foot-line .mono{font-family:"IBM Plex Mono",monospace}
 

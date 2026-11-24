@@ -10,7 +10,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ProvMap } from "../types";
 import { COMMS, ARCHIVE_PROV } from "../data/archive";
-import { MAIN_SLUGS } from "../lib/api";
 import { fmt } from "../lib/format";
 import { dObj, fmtDM, fmtDayMon, fmtShort, prevISO, rangeLabel } from "../lib/dates";
 import { computeExtremes, computeMovers, extremeNames, extremePrice } from "../lib/province";
@@ -213,19 +212,12 @@ const ARCHIVE_EXTREMES: React.JSX.Element[] = [
   </tr>,
 ];
 
-const STATIC_PROV_NOTE =
-  "Rata-rata nasional Bapanas 17 Nov 2026: beras medium Rp13.728/kg · cabai rawit merah Rp86.209/kg · bawang merah Rp35.774/kg · telur ayam Rp27.861/kg · Minyakita Rp16.895/liter. Tanda “—” berarti provinsi belum melaporkan komoditas itu: Papua Pegunungan (bawang merah, Minyakita) dan Papua Tengah (cabai rawit merah), pada kedua tanggal.";
-
 interface ProvinceSectionProps {
   prov: ProvMap;
   nas17: number[];
   commLive: boolean[];
   /** Tanggal data provinsi live (null = masih arsip). */
   liveProvDate: string | null;
-  /** Apakah ringkasan nasional live tersedia (untuk catatan provNote). */
-  bySlugPresent: boolean;
-  /** Tanggal data live (summary.date ?? maxProvDate). */
-  dataDate: string | null;
 }
 
 export default function ProvinceSection({
@@ -233,8 +225,6 @@ export default function ProvinceSection({
   nas17,
   commLive,
   liveProvDate,
-  bySlugPresent,
-  dataDate,
 }: ProvinceSectionProps): React.JSX.Element {
   const [selectedProv, setSelectedProv] = useState("Aceh");
   const [rankCi, setRankCi] = useState(1);
@@ -312,43 +302,6 @@ export default function ProvinceSection({
     : mvDowns.length > 0 && mvDowns.every((e) => e.comm === mvDowns[0].comm)
       ? "Semuanya " + mvDowns[0].comm.toLowerCase()
       : "Berdasarkan persen perubahan";
-  const mvUpNote = !live ? (
-    <>
-      <b>Catatan:</b> lonjakan Minyakita di Papua Selatan (+49,20% dalam sehari, Rp15.700 → Rp23.425)
-      sangat besar — kemungkinan pelaporan di provinsi itu masih terbatas, tetapi angka inilah yang
-      dilaporkan Bapanas.
-    </>
-  ) : (
-    (() => {
-      const extreme = movers ? movers.ups.filter((e) => e.pct > 10) : [];
-      if (extreme.length > 0) {
-        const e0 = extreme[0];
-        return (
-          <>
-            <b>Catatan:</b> ada kenaikan di atas 10% dalam sehari — terbesar{" "}
-            {e0.comm.toLowerCase()} di {e0.prov} (+
-            {e0.pct.toLocaleString("id-ID", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-            %) — lonjakan sebesar itu kemungkinan karena pelaporan di provinsi tersebut masih terbatas,
-            tetapi angka inilah yang dilaporkan sumber data.
-          </>
-        );
-      }
-      return (
-        <>
-          Dihitung dari data live {fmtShort(liveProvDate)} terhadap hari sebelumnya, untuk komoditas
-          yang tersedia di API. Minyakita tidak termasuk karena masih data 17 Nov 2026.
-        </>
-      );
-    })()
-  );
-  const mvDownNote = !live
-    ? "Jawa Timur, Papua Selatan, dan Sumatera Barat mencatat kenaikan di kelima komoditas. Sebaliknya, Kalimantan Barat, Kalimantan Tengah, Maluku, Sulawesi Tenggara, dan Papua Pegunungan tidak mencatat satu pun komoditas naik."
-    : "Dihitung dari data live " +
-      fmtShort(liveProvDate) +
-      " terhadap hari sebelumnya untuk komoditas live; Minyakita tidak termasuk karena belum tersedia di API (tetap data 17 Nov 2026).";
 
   const mvUpContent = live ? (
     mvUps.length > 0 ? (
@@ -414,9 +367,6 @@ export default function ProvinceSection({
         </tr>
       ))
     : ARCHIVE_EXTREMES;
-  const extNote = live
-    ? "Harga rata-rata eceran " + fmtShort(liveProvDate) + " dari data live · Minyakita: data 17 Nov 2026."
-    : "Harga rata-rata eceran 17 Nov 2026 menurut Bapanas.";
   const extAriaLabel = live
     ? "Provinsi termurah dan termahal per komoditas dari data live " +
       fmtDM(liveProvDate) +
@@ -424,36 +374,6 @@ export default function ProvinceSection({
       dObj(liveProvDate).y +
       "; Minyakita data 17 November 2026"
     : "Provinsi termurah dan termahal per komoditas menurut Bapanas 17 November 2026";
-
-  /* ----- Catatan provinsi (applyProvinsi) / arsip statis ----- */
-  let provNote = STATIC_PROV_NOTE;
-  if (live) {
-    const avgParts = COMMS.map((c, i) => c.name.toLowerCase() + " Rp" + fmt(nas17[i]) + c.unit);
-    const note =
-      (bySlugPresent
-        ? "Rata-rata nasional " + fmtShort(dataDate ?? liveProvDate)
-        : "Rata-rata nasional arsip 17 Nov 2026") +
-      ": " +
-      avgParts.join(" · ") +
-      (bySlugPresent ? ". Minyakita: data 17 Nov 2026, perubahannya terhadap 16 Nov 2026." : ".");
-    const missing: string[] = [];
-    COMMS.forEach((c, i) => {
-      provNames.forEach((name) => {
-        if (prov[name][i * 2] === null) missing.push(name + " (" + c.name.toLowerCase() + ")");
-      });
-    });
-    provNote = note + " Tanda “—” berarti provinsi belum melaporkan komoditas itu";
-    provNote += missing.length > 0 ? ": " + missing.join(", ") + "." : ".";
-    const fellBack: string[] = [];
-    MAIN_SLUGS.forEach((slug, i) => {
-      if (!commLive[i]) fellBack.push(COMMS[i].name.toLowerCase());
-    });
-    if (fellBack.length > 0)
-      provNote +=
-        " Data live " +
-        fellBack.join(", ") +
-        " tidak terjangkau saat halaman dimuat — komoditas itu memakai data arsip 17 Nov 2026.";
-  }
 
   const rankChgHead = live
     ? "Perubahan vs " +
@@ -482,29 +402,6 @@ export default function ProvinceSection({
           )}
         </div>
       </div>
-      <p className="sec-lede" id="provLede">
-        {live ? (
-          <>
-            Harga rata-rata eceran tingkat konsumen untuk <strong>38 provinsi</strong> dan 5 komoditas
-            utama. Beras medium, cabai rawit merah, bawang merah, dan telur ayam diambil{" "}
-            <strong>live dari API baksosapi.com</strong> — cermin Panel Harga Pangan Bapanas dan PIHPS —
-            setiap halaman dibuka; <strong>Minyakita tetap data 17 November 2026</strong> karena tidak
-            tersedia di API itu. Pilih provinsi untuk melihat detail harganya, atau pakai peringkat di
-            bawah untuk membandingkan satu komoditas antarprovinsi. Perubahan adalah selisih harga terbaru
-            terhadap harga hari sebelumnya yang dilaporkan API untuk provinsi itu. Perhatian: angka live per
-            provinsi mengikuti seri API baksosapi.com (skala PIHPS), bukan seri arsip Bapanas di halaman
-            ini — selisih besar antara mode live dan mode arsip, misalnya pada beras medium, adalah
-            pergantian seri sumber, bukan kenaikan harga dalam sehari.
-          </>
-        ) : (
-          <>
-            Harga rata-rata eceran tingkat konsumen untuk <strong>38 provinsi</strong> dan 5 komoditas
-            utama, dari Panel Harga Pangan Bapanas. Pilih provinsi untuk melihat detail harganya, atau
-            pakai peringkat di bawah untuk membandingkan satu komoditas antarprovinsi. Semua perubahan
-            adalah selisih <strong>17 November terhadap 16 November 2026</strong>.
-          </>
-        )}
-      </p>
 
       <div className="controls">
         <label className="select-box">
@@ -568,24 +465,15 @@ export default function ProvinceSection({
           <tbody id="provBody">{detailRows}</tbody>
         </table>
       </div>
-      <p className="cmp-table-note" id="provNote">
-        {provNote}
-      </p>
 
       <h3 className="prov-sub" id="mvHead">
         {mvHead}
       </h3>
-      <p className="prov-sub-note">
-        Perubahan satu hari terbesar antarprovinsi, dihitung dari data Bapanas kedua tanggal tersebut.
-      </p>
       <div className="hap-grid">
         <div className="hap-card">
           <h3>Kenaikan Terbesar</h3>
           <p className="hap-sub">Berdasarkan persen perubahan</p>
           <div id="mvUpRows">{mvUpContent}</div>
-          <p className="mv-note" id="mvUpNote">
-            {mvUpNote}
-          </p>
         </div>
         <div className="hap-card">
           <h3>Penurunan Terbesar</h3>
@@ -593,20 +481,10 @@ export default function ProvinceSection({
             {mvDownSub}
           </p>
           <div id="mvDownRows">{mvDownContent}</div>
-          <p className="mv-note" id="mvDownNote">
-            {mvDownNote}
-          </p>
         </div>
       </div>
 
       <h3 className="prov-sub">Peringkat Harga antar Provinsi</h3>
-      <p className="prov-sub-note" id="rankUnit">
-        {live
-          ? "Pilih komoditas — tabel mengurutkan provinsi dari harga tertinggi ke terendah pada " +
-            fmtShort(liveProvDate) +
-            ", lengkap dengan perubahannya terhadap hari sebelumnya. Provinsi yang belum melaporkan komoditas itu tampil di bagian bawah dengan tanda “—”. Minyakita memakai data 17 Nov 2026."
-          : "Pilih komoditas — tabel mengurutkan 38 provinsi dari harga tertinggi ke terendah pada 17 Nov 2026, lengkap dengan perubahannya terhadap 16 Nov 2026."}
-      </p>
       <div className="controls">
         <div className="chips" role="group" aria-label="Pilih komoditas untuk peringkat" id="rankChips">
           {COMMS.map((c, i) => (
@@ -653,9 +531,6 @@ export default function ProvinceSection({
       </div>
 
       <h3 className="prov-sub">Termurah &amp; Termahal per Komoditas</h3>
-      <p className="prov-sub-note" id="extNote">
-        {extNote}
-      </p>
       <div className="panel">
         <table className="ptable" id="extTable" aria-label={extAriaLabel}>
           <thead>
@@ -668,10 +543,6 @@ export default function ProvinceSection({
           <tbody id="extBody">{extRows}</tbody>
         </table>
       </div>
-      <p className="cmp-table-note">
-        Bapanas memperbarui data sepanjang hari, jadi angka per provinsi bisa berbeda dengan harga di pasar
-        tertentu. Data kosong (“—”) berarti provinsi belum melaporkan komoditas tersebut.
-      </p>
     </section>
   );
 }

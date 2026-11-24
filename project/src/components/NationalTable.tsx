@@ -7,7 +7,7 @@ import type { CatGroup, HistoryPoint, PriceItem } from "../types";
 import { CAT_DEFS } from "../data/archive";
 import { loadHistory } from "../lib/api";
 import { fmt } from "../lib/format";
-import { addDaysISO, dObj, fmtDM, fmtLong, fmtShort, MIN_DATA_DATE, prevISO } from "../lib/dates";
+import { addDaysISO, dObj, fmtDM, fmtShort, MIN_DATA_DATE } from "../lib/dates";
 import TrendChart from "./TrendChart";
 
 function ChgSpan({ it }: { it: PriceItem }): React.JSX.Element {
@@ -200,31 +200,6 @@ export default function NationalTable({
           )}
         </div>
       </div>
-      <p className="sec-lede" id="natLede">
-        {summaryDate && viewDate ? (
-          <>
-            Menampilkan harga eceran nasional pada {fmtLong(viewDate)} dari API baksosapi.com (cermin
-            data PIHPS Bank Indonesia &amp; Panel Harga Pangan Bapanas). Kolom perubahan adalah selisih
-            terhadap hari pelaporan sebelumnya. Gunakan pemilih tanggal atau tombol hari sebelum/sesudah
-            untuk berpindah hari.
-          </>
-        ) : summaryDate ? (
-          <>
-            Harga eceran nasional per kilogram di pasar tradisional — 11 komoditas yang diambil live dari
-            API baksosapi.com (cermin data PIHPS Bank Indonesia &amp; Panel Harga Pangan Bapanas) setiap
-            halaman ini dibuka. Kolom perubahan adalah selisih terhadap hari sebelumnya (
-            {fmtShort(prevISO(summaryDate))}). Komoditas “Cabai Merah” memakai nama sesuai API — API tidak
-            merinci variannya, jadi jangan disamakan dengan “cabai merah besar” PIHPS pada data arsip.
-          </>
-        ) : (
-          <>
-            Harga eceran nasional per kilogram di pasar tradisional. Kolom perubahan adalah perubahan
-            terhadap hari sebelumnya, seperti dilaporkan PIHPS pada 17 November 2026. Cabai rawit merah dan
-            telur ayam ras berasal dari update pukul 10.20 WIB di hari yang sama.
-          </>
-        )}
-      </p>
-
       {latestDate && effDate ? (
         <>
           <div className="datebar">
@@ -266,12 +241,6 @@ export default function NationalTable({
             {viewLoading ? <span className="dateloading">Memuat…</span> : null}
           </div>
           {viewNote ? <p className="datenote">{viewNote}</p> : null}
-          {viewDate ? (
-            <p className="datenote">
-              Bagian per provinsi di bawah tetap memakai data terakhir ({fmtShort(latestDate)}) — sumber
-              tidak menyediakan riwayat harga per provinsi.
-            </p>
-          ) : null}
         </>
       ) : null}
 
@@ -357,11 +326,6 @@ export default function NationalTable({
         />
       ) : null}
 
-      <p className="cmp-table-note" id="natNote">
-        {summaryDate
-          ? "Tanda “—” pada kolom perubahan berarti API tidak melaporkan harga kemarin untuk komoditas tersebut."
-          : "Tanda “—” pada kolom perubahan berarti PIHPS tidak melaporkan perubahan untuk komoditas tersebut pada 17 November 2026."}
-      </p>
     </section>
   );
 }

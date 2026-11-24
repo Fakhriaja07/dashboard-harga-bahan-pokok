@@ -51,7 +51,6 @@ export default function App(): React.JSX.Element {
   const [nas17, setNas17] = useState<number[]>(ARCHIVE_NAS17);
   const [commLive, setCommLive] = useState<boolean[]>([false, false, false, false, false]);
   const [liveProvDate, setLiveProvDate] = useState<string | null>(null);
-  const [bySlugPresent, setBySlugPresent] = useState(false);
   const [summaryDate, setSummaryDate] = useState<string | null>(null);
   const [liveAny, setLiveAny] = useState(false);
   const [dataDate, setDataDate] = useState<string | null>(null);
@@ -81,7 +80,6 @@ export default function App(): React.JSX.Element {
         );
         setCats(buildCats(bySlug));
         setSummaryDate(date);
-        setBySlugPresent(true);
       }
       if (MAIN_SLUGS.some((s) => !!live.prov[s])) {
         const { active, commLive: cl } = buildActiveProv(ARCHIVE_PROV, live.prov, MAIN_SLUGS);
@@ -213,8 +211,6 @@ export default function App(): React.JSX.Element {
           nas17={nas17}
           commLive={commLive}
           liveProvDate={liveProvDate}
-          bySlugPresent={bySlugPresent}
-          dataDate={dataDate}
         />
       </main>
       <Sources footStatus={footStatus} />

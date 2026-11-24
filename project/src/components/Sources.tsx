@@ -26,17 +26,6 @@ export default function Sources({ footStatus }: { footStatus: string }): React.J
             10.00 WIB). Minyakita tidak tersedia di API ini.
           </li>
         </ul>
-        <div className="caveat">
-          <b>Catatan metodologi:</b> angka PIHPS, BPS, dan Bapanas bisa berbeda untuk komoditas yang sama
-          karena periode dan cakupan pencatatannya berbeda. Karena itu setiap tabel di halaman ini berdiri
-          sendiri dengan label sumber dan tanggalnya. Harga nasional dan harga per provinsi kini diambil
-          live dari API baksosapi.com setiap halaman dibuka — baksosapi.com adalah cermin pihak ketiga
-          atas data PIHPS dan Bapanas, bukan sumber resminya. Jika API tidak terjangkau, halaman otomatis
-          menampilkan data arsip (snapshot) 16–17 November 2026 yang tetap tertanam di halaman ini, dan
-          menandainya sebagai mode arsip. Minyakita dan indikator inflasi BPS tetap snapshot bertanggal
-          sesuai labelnya. Halaman ini tidak menampilkan grafik tren harian. Pada section Harga per
-          Provinsi, sel bertanda “—” berarti provinsi belum melaporkan komoditas itu pada tanggal datanya.
-        </div>
         <div className="foot-line">
           <span>© 2026 Fakhri — Data Analyst</span>
           <span className="mono" id="footStatus">

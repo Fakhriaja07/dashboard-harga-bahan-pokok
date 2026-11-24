@@ -103,13 +103,6 @@ export default function Masthead({
                 Berapa harga beras, cabai, dan telur hari ini — di pasar nasional dan di setiap provinsi di
                 Indonesia.
               </p>
-              <p className="mast-desc">
-                Dashboard ini merangkum harga eceran kebutuhan pokok dari sumber resmi:{" "}
-                <strong>PIHPS Bank Indonesia</strong>, <strong>BPS</strong>, dan{" "}
-                <strong>Panel Harga Pangan Bapanas</strong>. Setiap angka diberi label sumber dan tanggalnya —
-                angka dari sumber berbeda tidak dicampur dalam satu tabel, karena periode dan cakupan
-                pencatatannya berbeda.
-              </p>
             </div>
             <aside className="update-box" aria-label="Keterangan pembaruan data">
               <div className="ub-head">
