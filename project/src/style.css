@@ -399,6 +399,12 @@
   .trend-line{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
   .trend-dot{fill:var(--accent)}
   .trend-axis{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace;margin-top:6px}
+  .prov-chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;overflow-x:auto}
+  .prov-chart svg{display:block;min-width:560px}
+  .chart-legend{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);margin-bottom:10px}
+  .lg-line{display:inline-block;width:22px;border-top:2px dashed var(--accent)}
+  .pc-label{font-size:11px;fill:var(--ink)}
+  .pc-value{font-size:11px;fill:var(--ink-2);font-family:"IBM Plex Mono",monospace}
   @media (max-width:560px){
     .trendstats{grid-template-columns:repeat(2,1fr)}
   }

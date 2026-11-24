@@ -13,6 +13,7 @@ import { COMMS, ARCHIVE_PROV } from "../data/archive";
 import { fmt } from "../lib/format";
 import { dObj, fmtDM, fmtDayMon, fmtShort, prevISO, rangeLabel } from "../lib/dates";
 import { computeExtremes, computeMovers, extremeNames, extremePrice } from "../lib/province";
+import ProvinceChart from "./ProvinceChart";
 
 function ProvChgSpan({ v17, v16 }: { v17: number | null; v16: number | null }): React.JSX.Element {
   if (v17 === null || v16 === null) {
@@ -267,7 +268,7 @@ export default function ProvinceSection({
   });
 
   /* ----- Peringkat (renderRank) ----- */
-  const rankRows = provNames
+  const rankData = provNames
     .map((name) => {
       const row = prov[name];
       return { name, v17: row[rankCi * 2], v16: row[rankCi * 2 + 1] };
@@ -276,19 +277,22 @@ export default function ProvinceSection({
       if (x.v17 === null) return 1;
       if (y.v17 === null) return -1;
       return y.v17 - x.v17;
-    })
-    .map((r, i) => (
-      <tr key={r.name}>
-        <td className="rank-num">{i + 1}</td>
-        <td>
-          <span className="item-name">{r.name}</span>
-        </td>
-        <td className="num price">{r.v17 === null ? "—" : fmt(r.v17)}</td>
-        <td className="num">
-          <ProvChgSpan v17={r.v17} v16={r.v16} />
-        </td>
-      </tr>
-    ));
+    });
+  const rankRows = rankData.map((r, i) => (
+    <tr key={r.name}>
+      <td className="rank-num">{i + 1}</td>
+      <td>
+        <span className="item-name">{r.name}</span>
+      </td>
+      <td className="num price">{r.v17 === null ? "—" : fmt(r.v17)}</td>
+      <td className="num">
+        <ProvChgSpan v17={r.v17} v16={r.v16} />
+      </td>
+    </tr>
+  ));
+  const chartRows = rankData
+    .filter((r) => r.v17 !== null)
+    .map((r) => ({ name: r.name, price: r.v17 as number }));
 
   /* ----- Pergerakan Terbesar (renderMoversLive) / arsip statis ----- */
   const movers = live ? computeMovers(prov, provNames, commLive) : null;
@@ -529,6 +533,14 @@ export default function ProvinceSection({
           <tbody id="rankBody">{rankRows}</tbody>
         </table>
       </div>
+
+      <h3 className="prov-sub">Grafik Peringkat Harga</h3>
+      <ProvinceChart
+        rows={chartRows}
+        nationalAvg={nas17[rankCi]}
+        unit={COMMS[rankCi].unit}
+        selectedProv={selectedProv}
+      />
 
       <h3 className="prov-sub">Termurah &amp; Termahal per Komoditas</h3>
       <div className="panel">
