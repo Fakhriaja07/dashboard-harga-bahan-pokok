@@ -294,6 +294,27 @@ export default function ProvinceSection({
     .filter((r) => r.v17 !== null)
     .map((r) => ({ name: r.name, price: r.v17 as number }));
 
+  /* Tombol pilih komoditas — dipakai di atas tabel peringkat dan di atas
+     grafik, keduanya menggerakkan state rankCi yang sama. */
+  const rankChips = (id: string, label: string): React.JSX.Element => (
+    <div className="controls">
+      <div className="chips" role="group" aria-label={label} id={id}>
+        {COMMS.map((c, i) => (
+          <button
+            className="chip"
+            type="button"
+            data-ci={i}
+            aria-pressed={rankCi === i ? "true" : "false"}
+            key={c.name}
+            onClick={() => setRankCi(i)}
+          >
+            {c.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
   /* ----- Pergerakan Terbesar (renderMoversLive) / arsip statis ----- */
   const movers = live ? computeMovers(prov, provNames, commLive) : null;
   const mvUps = movers ? movers.ups.slice(0, 5) : [];
@@ -489,22 +510,7 @@ export default function ProvinceSection({
       </div>
 
       <h3 className="prov-sub">Peringkat Harga antar Provinsi</h3>
-      <div className="controls">
-        <div className="chips" role="group" aria-label="Pilih komoditas untuk peringkat" id="rankChips">
-          {COMMS.map((c, i) => (
-            <button
-              className="chip"
-              type="button"
-              data-ci={i}
-              aria-pressed={rankCi === i ? "true" : "false"}
-              key={c.name}
-              onClick={() => setRankCi(i)}
-            >
-              {c.name}
-            </button>
-          ))}
-        </div>
-      </div>
+      {rankChips("rankChips", "Pilih komoditas untuk peringkat")}
       <div className="panel">
         <table
           className="ptable rank-table"
@@ -535,6 +541,7 @@ export default function ProvinceSection({
       </div>
 
       <h3 className="prov-sub">Grafik Peringkat Harga</h3>
+      {rankChips("chartChips", "Pilih komoditas untuk grafik")}
       <ProvinceChart
         rows={chartRows}
         nationalAvg={nas17[rankCi]}
