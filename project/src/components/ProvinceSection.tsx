@@ -292,6 +292,7 @@ export default function ProvinceSection({
   ));
   const chartRows = rankData
     .filter((r) => r.v17 !== null)
+    .slice(0, 10)
     .map((r) => ({ name: r.name, price: r.v17 as number }));
 
   /* Tombol pilih komoditas — dipakai di atas tabel peringkat dan di atas
@@ -540,7 +541,7 @@ export default function ProvinceSection({
         </table>
       </div>
 
-      <h3 className="prov-sub">Grafik Peringkat Harga</h3>
+      <h3 className="prov-sub">Grafik Peringkat Harga (10 Teratas)</h3>
       {rankChips("chartChips", "Pilih komoditas untuk grafik")}
       <ProvinceChart
         rows={chartRows}
