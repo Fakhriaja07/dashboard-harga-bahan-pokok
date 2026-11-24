@@ -93,7 +93,7 @@ export default function Masthead({
                 <div>
                   <div className="mast-kicker">Buletin Harga Pangan</div>
                   <h1>
-                    Harga Bahan Pokok
+                    Harga Bahan Pokok{' '}
                     <br />
                     <span className="hl">Indonesia</span>
                   </h1>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://harga-bahan-pokok.fakhrigalaxy.my.id/sitemap.xml
