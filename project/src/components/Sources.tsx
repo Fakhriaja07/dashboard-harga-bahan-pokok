@@ -11,8 +11,8 @@ export default function Sources({ footStatus }: { footStatus: string }): React.J
             newshive.id, 17 Nov 2026.
           </li>
           <li>
-            <b>BPS</b> — dikutip via kowantaranews.com &amp; suaragarut.id, 16 Nov 2026; Rakor Pengendalian
-            Inflasi Daerah 16 Nov 2026.
+            <b>BPS</b> — dikutip via lampungprov.go.id, validnews.id &amp; chatnews.id, 23 Nov 2026;
+            Rakor Pengendalian Inflasi Daerah 23 Nov 2026.
           </li>
           <li>
             <b>Panel Harga Pangan Bapanas</b> — dikutip via journalarta.com, 17 Nov 2026; termasuk data per
