@@ -473,3 +473,9 @@
     .trendhead h3{font-size:16px}
     .tstat-val{font-size:14px}
   }
+  /* Menu lompat di HP: jangan digeser menyamping (item terakhir terlihat
+     terpotong) — jadikan 2 kolom x 2 baris agar keempatnya terlihat. */
+  @media (max-width:560px){
+    .jumpnav .wrap{flex-wrap:wrap;overflow-x:visible}
+    .jumpnav a{flex:1 1 calc(50% - 4px);justify-content:center}
+  }
