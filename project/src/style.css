@@ -413,3 +413,63 @@
   @media (max-width:560px){
     .trendstats{grid-template-columns:repeat(2,1fr)}
   }
+
+  /* ---------- Responsif HP (28 Nov 2026) ---------- */
+  /* Tabel dibungkus .table-scroll agar di layar sempit bisa digeser
+     menyamping dan tidak terpotong oleh .panel{overflow:hidden}. */
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .mv-name{min-width:0}
+  .bar-label .bl-name{min-width:0}
+  @media (max-width:560px){
+    .wrap{padding:0 14px}
+    .topbar .wrap{gap:2px 12px}
+    .ind{padding:12px 12px 10px}
+    .ind .value{font-size:22px}
+    .ind .value small{font-size:13px}
+    .sec-meta{font-size:10.5px;padding:7px 10px}
+    .datebar{gap:8px}
+    .datepick{flex:1 1 100%}
+    .datepick input{flex:1;min-width:0}
+    .select-box{flex:1 1 100%}
+    .search{flex:1 1 100%}
+    .ptable th,.ptable td{padding:10px 8px}
+    .cat-row td{padding:8px}
+    .item-name{font-size:13.5px}
+    .item-unit{font-size:11.5px}
+    .price{font-size:13.5px}
+    .chg{font-size:11.5px;padding:3px 7px}
+    .ptable .chg .pct{display:none}
+    .trendbtn{font-size:11px;padding:2px 7px;margin-left:6px}
+    .trendpanel{padding:16px 14px}
+    .hap-card{padding:16px}
+    .prov-head{padding:14px 14px 10px}
+    .prov-head h3{font-size:20px}
+    .prov-chart{padding:12px 10px}
+    .prov-chart svg{min-width:480px}
+    .rank-num{width:26px}
+    .ext-prov{font-size:13.5px}
+    .ext-price{font-size:13px}
+  }
+  /* HP kecil (≤400px, mis. layar 320–360px): rapatkan lagi agar
+     tidak ada yang terpotong; tabel tetap bisa digeser bila perlu. */
+  @media (max-width:400px){
+    .wrap{padding:0 10px}
+    h1{font-size:30px}
+    .mast-lede{font-size:16px}
+    .brand-mark{width:36px;height:36px;margin-top:20px}
+    .ind .value{font-size:20px}
+    .ind .label{font-size:11px}
+    .ind .note{font-size:11.5px}
+    .jumpnav a{padding:7px 12px;font-size:12.5px}
+    .chip{padding:8px 12px;font-size:12.5px}
+    .datebtn{padding:8px 10px;font-size:12.5px}
+    .ptable th,.ptable td{padding:9px 6px}
+    .ptable thead th{font-size:10.5px}
+    .item-name{font-size:12.5px}
+    .price{font-size:12.5px}
+    .chg{font-size:11px;padding:2px 6px}
+    .prov-head h3{font-size:18px}
+    .hap-card h3{font-size:15px}
+    .trendhead h3{font-size:16px}
+    .tstat-val{font-size:14px}
+  }

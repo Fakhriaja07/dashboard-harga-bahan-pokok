@@ -285,6 +285,7 @@ export default function NationalTable({
       </div>
 
       <div className="panel">
+        <div className="table-scroll">
         <table
           className="ptable"
           id="natTable"
@@ -311,6 +312,7 @@ export default function NationalTable({
           </thead>
           <tbody id="priceBody">{rows}</tbody>
         </table>
+        </div>
         <div className="empty-msg" id="emptyMsg" hidden={any}>
           Tidak ada komoditas yang cocok dengan pencarian itu.
         </div>

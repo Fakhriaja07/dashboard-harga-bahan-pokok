@@ -468,6 +468,7 @@ export default function ProvinceSection({
               : "HARGA 17 NOV 2026 · PERUBAHAN VS 16 NOV 2026"}
           </span>
         </div>
+        <div className="table-scroll">
         <table
           className="ptable"
           aria-label="Detail harga per komoditas untuk provinsi terpilih menurut Bapanas"
@@ -490,6 +491,7 @@ export default function ProvinceSection({
           </thead>
           <tbody id="provBody">{detailRows}</tbody>
         </table>
+        </div>
       </div>
 
       <h3 className="prov-sub" id="mvHead">
@@ -513,6 +515,7 @@ export default function ProvinceSection({
       <h3 className="prov-sub">Peringkat Harga antar Provinsi</h3>
       {rankChips("rankChips", "Pilih komoditas untuk peringkat")}
       <div className="panel">
+        <div className="table-scroll">
         <table
           className="ptable rank-table"
           id="rankTable"
@@ -539,6 +542,7 @@ export default function ProvinceSection({
           </thead>
           <tbody id="rankBody">{rankRows}</tbody>
         </table>
+        </div>
       </div>
 
       <h3 className="prov-sub">Grafik Peringkat Harga (10 Teratas)</h3>
@@ -552,6 +556,7 @@ export default function ProvinceSection({
 
       <h3 className="prov-sub">Termurah &amp; Termahal per Komoditas</h3>
       <div className="panel">
+        <div className="table-scroll">
         <table className="ptable" id="extTable" aria-label={extAriaLabel}>
           <thead>
             <tr>
@@ -562,6 +567,7 @@ export default function ProvinceSection({
           </thead>
           <tbody id="extBody">{extRows}</tbody>
         </table>
+        </div>
       </div>
     </section>
   );
